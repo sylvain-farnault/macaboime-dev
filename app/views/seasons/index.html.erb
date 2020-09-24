@@ -4,11 +4,17 @@
   <%= f.button :submit %>
 <% end %>
 
-<ul>
   <% @seasons.each do |season| %>
-    <li>
+    <ul>
       <%= link_to season.years, season_path(season) %>
-      <%= link_to fa_icon("trash"), season_path(season), method: 'delete', confirm: "Sure ?" %>
-    </li>
+      <% if season.competitions.empty? %>
+        <%= link_to fa_icon("trash"), season_path(season), method: 'delete', confirm: "Sure ?" %>
+      <% end %>
+      <%= link_to fa_icon("plus-circle"), "#" %>
+      <% season.competitions.each do |competition| %>
+        <li>
+          <%= link_to competition.name, "#" %>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
-</ul>
