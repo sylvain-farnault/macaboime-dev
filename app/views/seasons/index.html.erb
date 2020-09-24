@@ -13,7 +13,7 @@
       <%= link_to fa_icon("plus-circle"), "#" %>
       <% season.competitions.each do |competition| %>
         <li>
-          <%= link_to competition.name, "#" %>
+          <%= link_to competition.name, season_competition_path(competition) %>
         </li>
       <% end %>
     </ul>
