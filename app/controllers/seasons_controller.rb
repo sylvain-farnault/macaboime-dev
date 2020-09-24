@@ -14,11 +14,11 @@ class SeasonsController < ApplicationController
   end
 
   def show
-    @season = Season.find_by_years(params[:years])
+    @season = Season.find_by_years(params[:id])
   end
 
   def destroy
-    @season = Season.find_by_years(params[:years])
+    @season = Season.find_by_years(params[:id])
     if @season
       @season.destroy
       redirect_to seasons_path
