@@ -1,9 +1,8 @@
 class SeasonsController < ApplicationController
 
   def index
-    @season = Season.new
     @seasons = Season.all.order(years: :desc)
-
+    @season = Season.new
   end
 
   def create
@@ -14,18 +13,15 @@ class SeasonsController < ApplicationController
   end
 
   def show
-    @season = Season.find(params[:id])
-    # Get all competitions for a @season
-
+    @season = Season.find_by_years(params[:id])
   end
 
   def destroy
-    @season = Season.find(params[:id])
+    @season = Season.find_by_years(params[:id])
     if @season
       @season.destroy
       redirect_to seasons_path
     end
-
   end
 
   private

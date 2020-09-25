@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   get "power", to: "pages#power"
   scope '/power' do
     resources :seasons, only: [:index, :create, :show, :destroy]
+    resources :competitions, only: [:index, :show, :destroy]
+    resources :editions, only: [:index]
+    resources :competitions, only: [:create]
   end
+
+
 
 end

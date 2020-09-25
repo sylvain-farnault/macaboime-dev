@@ -1,0 +1,16 @@
+<h1>Competitions List</h1>
+<%= simple_form_for @competition do |f| %>
+  <%= f.input :name %>
+  <%= f.input :kind, collection: ["championship", "cup", "friendly"], include_blank: false %>
+  <%= f.button :submit %>
+<% end %>
+
+<ul>
+  <% @competitions.each do |competition| %>
+    <li>
+      <%= link_to competition.name, competition_path(competition) %>
+      <%= "(#{competition.kind})" %>
+      <%= link_to fa_icon("trash"), competition_path(competition), method: 'delete', confirm: "Sure ?" %>
+    </li>
+  <% end %>
+</ul>
