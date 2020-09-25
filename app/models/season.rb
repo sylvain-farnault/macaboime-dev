@@ -1,5 +1,6 @@
 class Season < ApplicationRecord
-  has_many :competitions
+
+  validates :years, presence: true, uniqueness: true
 
   def to_param
     years

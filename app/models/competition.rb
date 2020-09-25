@@ -1,8 +1,7 @@
 class Competition < ApplicationRecord
-  belongs_to :season
 
-  validates :season, presence: true
-  validates :type,
+  validates :name, presence: true
+  validates :kind,
             presence: true,
             inclusion: {
               in: %w(championship cup friendly),

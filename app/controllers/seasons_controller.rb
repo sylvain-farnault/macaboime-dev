@@ -1,9 +1,8 @@
 class SeasonsController < ApplicationController
 
   def index
-    @season = Season.new
     @seasons = Season.all.order(years: :desc)
-
+    @season = Season.new
   end
 
   def create

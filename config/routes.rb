@@ -3,9 +3,12 @@ Rails.application.routes.draw do
   root to: 'pages#home'
   get "power", to: "pages#power"
   scope '/power' do
-    resources :seasons, only: [:index, :create, :show, :destroy] do
-      resources :competitions, only: [:show]
-    end
+    resources :seasons, only: [:index, :create, :show, :destroy]
+    resources :competitions, only: [:index, :show, :destroy]
+    resources :editions, only: [:index]
+    resources :competitions, only: [:create]
   end
+
+
 
 end
