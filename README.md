@@ -1,3 +1,3 @@
-Code for the Macaboime Ruby on Rails web application.
-Will be on production soon.
+Code for the Macaboime Ruby on Rails web application. <br>
+Will be on production soon.<br>
 Macaboime is an amateur Football League based in Marseille and near surroundings.
