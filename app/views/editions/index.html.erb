@@ -1,0 +1,16 @@
+<h1>Competition Editions</h1>
+<%= simple_form_for @edition do |f| %>
+  <%= f.association :season, value_method: :id, label_method: :years %>
+  <%= f.association :competition, value_method: :id, label_method: :name %>
+  <%= f.button :submit %>
+<% end -%>
+
+
+<ul>
+  <% @editions.each do |edition| %>
+    <li>
+      <%= link_to "(#{edition.season.id})" + edition.season.years + "/ (#{edition.competition.id})" + edition.competition.name, edition_path(edition) %>
+    </li>
+  <% end %>
+</ul>
+
