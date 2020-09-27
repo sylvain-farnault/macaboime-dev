@@ -1,6 +1,7 @@
 class Competition < ApplicationRecord
+  has_many :editions
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :kind,
             presence: true,
             inclusion: {
