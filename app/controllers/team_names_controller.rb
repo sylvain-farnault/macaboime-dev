@@ -1,0 +1,2 @@
+class TeamNamesController < ApplicationController
+end

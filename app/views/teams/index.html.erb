@@ -1,0 +1,16 @@
+<h1>Teams</h1>
+<h2>Add a team</h2>
+<%= simple_form_for @new_team do |f| %>
+  <%= f.input :name %>
+  <%= f.input :used_since, as: :date, html5: true, label: "Date de création" %>
+  <%= f.input :description, as: :text %>
+  <%= f.button :submit %>
+<% end -%>
+
+<h3>All Teams</h3>
+<% @teams.each do |team| %>
+<ul>
+  <li><%= link_to "#{team.team_names.last.name} (création en #{team.team_names.last.used_since.strftime("%Y")})", team_path(team) %></li>
+</ul>
+
+<% end %>
