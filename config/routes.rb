@@ -5,8 +5,11 @@ Rails.application.routes.draw do
   scope '/power' do
     resources :seasons, only: [:index, :create, :show, :destroy]
     resources :competitions, only: [:index, :create, :show, :destroy]
-    resources :editions, only: [:index, :create, :show]
     resources :teams, only: [:index, :create, :show]
+    resources :editions, only: [:index, :create]
+    resources :editions, only: [:show] do
+      resources :contestants, only: [:index, :create]
+    end
   end
 
 
