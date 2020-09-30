@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :editions, only: [:index, :create]
     resources :editions, only: [:show] do
       resources :contestants, only: [:index, :create]
+      resources :schedules, only: [:index, :create]
     end
   end
 
