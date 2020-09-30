@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_29_093828) do
+ActiveRecord::Schema.define(version: 2020_09_29_151239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(version: 2020_09_29_093828) do
     t.integer "award_lose", default: 0
     t.integer "award_forfeit", default: 0
     t.boolean "ratio_pts_by_match", default: false
+  end
+
+  create_table "contestants", force: :cascade do |t|
+    t.bigint "edition_id", null: false
+    t.bigint "team_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["edition_id"], name: "index_contestants_on_edition_id"
+    t.index ["team_id"], name: "index_contestants_on_team_id"
   end
 
   create_table "editions", force: :cascade do |t|
@@ -57,6 +66,8 @@ ActiveRecord::Schema.define(version: 2020_09_29_093828) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "contestants", "editions"
+  add_foreign_key "contestants", "teams"
   add_foreign_key "editions", "competitions"
   add_foreign_key "editions", "seasons"
   add_foreign_key "team_names", "teams"
