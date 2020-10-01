@@ -8,12 +8,21 @@ OR
   <%= f.button :submit, "Generate Championship Calendar" %>
 <% end %>
 <br>
-<% @schedules.each do |schedule| %>
-  <%= schedule.designation + ": " + schedule.day.to_s %> <br>
-<% end %>
 <br>
-<%= simple_form_for [@edition, @schedule] do |f| %>
+<%= simple_form_for @edition, method: :post, url: edition_games_path do |f| %>
   <%= f.button :submit, "Generate Championship Games" %>
+<% end %>
+
+
+<% @edition.schedules.each do |schedule| %>
+  <strong>
+  <%= schedule.designation + ": " + schedule.day.to_s %> <br>
+  </strong>
+  <% schedule.games.each do |game| %>
+  <%= game.results.first.team.team_names.last.name + " VS " + game.results.last.team.team_names.last.name %> <br>
+  <% end %>
+  <br>
+
 <% end %>
 
 

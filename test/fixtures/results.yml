@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  team: one
+  game: one
+  mark: 1
+  penalty_mark: 1
+  points_award: 1
+  forfeit: false
+
+two:
+  team: two
+  game: two
+  mark: 1
+  penalty_mark: 1
+  points_award: 1
+  forfeit: false

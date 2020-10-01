@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  schedule: one
+  stadium: one
+  alternative_date: 2020-10-01
+  status: MyString
+
+two:
+  schedule: two
+  stadium: two
+  alternative_date: 2020-10-01
+  status: MyString

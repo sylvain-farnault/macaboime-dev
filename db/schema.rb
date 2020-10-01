@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_30_134552) do
-
+ActiveRecord::Schema.define(version: 2020_10_01_130321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +47,30 @@ ActiveRecord::Schema.define(version: 2020_09_30_134552) do
     t.index ["season_id"], name: "index_editions_on_season_id"
   end
 
+  create_table "games", force: :cascade do |t|
+    t.bigint "schedule_id", null: false
+    t.bigint "stadium_id"
+    t.date "alternative_date"
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["schedule_id"], name: "index_games_on_schedule_id"
+    t.index ["stadium_id"], name: "index_games_on_stadium_id"
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "game_id", null: false
+    t.integer "mark"
+    t.integer "penalty_mark"
+    t.integer "points_award"
+    t.boolean "forfeit", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_results_on_game_id"
+    t.index ["team_id"], name: "index_results_on_team_id"
+  end
+
   create_table "schedules", force: :cascade do |t|
     t.bigint "edition_id", null: false
     t.date "day", null: false
@@ -59,6 +82,14 @@ ActiveRecord::Schema.define(version: 2020_09_30_134552) do
 
   create_table "seasons", force: :cascade do |t|
     t.string "years"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "stadiums", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -82,6 +113,10 @@ ActiveRecord::Schema.define(version: 2020_09_30_134552) do
   add_foreign_key "contestants", "teams"
   add_foreign_key "editions", "competitions"
   add_foreign_key "editions", "seasons"
+  add_foreign_key "games", "schedules"
+  add_foreign_key "games", "stadiums"
+  add_foreign_key "results", "games"
+  add_foreign_key "results", "teams"
   add_foreign_key "schedules", "editions"
   add_foreign_key "team_names", "teams"
 end
