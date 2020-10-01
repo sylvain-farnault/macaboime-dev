@@ -16,7 +16,7 @@ OR
 
 <% @edition.schedules.each do |schedule| %>
   <strong>
-  <%= schedule.designation + ": " + schedule.day.to_s %> <br>
+  <%= schedule.designation + ": " + schedule.day.strftime("%d/%m/%Y") %> <br>
   </strong>
   <% schedule.games.each do |game| %>
   <%= game.results.first.team.team_names.last.name + " VS " + game.results.last.team.team_names.last.name %> <br>
