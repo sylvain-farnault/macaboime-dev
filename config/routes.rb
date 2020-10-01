@@ -10,10 +10,8 @@ Rails.application.routes.draw do
     resources :editions, only: [:show] do
       resources :contestants, only: [:index, :create]
       resources :schedules, only: [:index, :create]
-      post "restaurants", to: "schedules#generate_games"
+      post "games", to: "schedules#generate_games"
     end
   end
-
-
 
 end
