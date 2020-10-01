@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  edition: one
+  day: 2020-09-30
+  designation: MyString
+
+two:
+  edition: two
+  day: 2020-09-30
+  designation: MyString

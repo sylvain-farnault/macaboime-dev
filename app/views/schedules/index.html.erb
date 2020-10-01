@@ -1,0 +1,19 @@
+<h1>Calendar for <%= @edition.competition.name + "/" + @edition.season.years %></h1>
+Total_Rounds : <%= @edition.total_rounds %> <br>
+Total Teams : <strong><%= @edition.teams.count %></strong> <br>
+<%= link_to "Add Contestant Teams", edition_contestants_path(@edition) %> <br>
+OR
+<%= simple_form_for [@edition, @schedule] do |f| %>
+  <%= f.input :day, as: :date, html5: true, label: "Date de la 1ere journée" %>
+  <%= f.button :submit, "Generate Championship Calendar" %>
+<% end %>
+<br>
+<% @schedules.each do |schedule| %>
+  <%= schedule.designation + ": " + schedule.day.to_s %> <br>
+<% end %>
+<br>
+<%= simple_form_for [@edition, @schedule] do |f| %>
+  <%= f.button :submit, "Generate Championship Games" %>
+<% end %>
+
+
