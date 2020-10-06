@@ -4,7 +4,7 @@
   font-family: 'Open Sans', sans-serif;
 }
 
-html, body {height: 100%}
+html, body {height: 100%;}
 
 body {
   background-image: image-url("logo_silhouette_mouv.png");
@@ -17,7 +17,7 @@ body {
 
 
 .body-cover {
-  // border: 1px solid red;
+  border: 1px solid rgba(27, 40, 56, 1);
   background-color: rgba(27, 40, 56, 0.8);
   width: 100%;
   margin: 0 auto;
@@ -36,12 +36,15 @@ body {
 
 
 .wordCarousel {
+    // border: 1px solid green;
     font-size: 36px;
     font-weight: 100;
     color: #939393;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     div {
+        // border: 1px solid blue;
         overflow: hidden;
         position: relative;
         float: right;
@@ -59,7 +62,8 @@ body {
         }
     }
     img {
-      width: 100px;
+      // border: 1px solid pink;
+      width: 150px;
     }
 }
 
