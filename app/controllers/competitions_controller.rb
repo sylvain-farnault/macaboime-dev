@@ -24,6 +24,10 @@ class CompetitionsController < ApplicationController
     end
   end
 
+  def display_championship_calendar(edition)
+
+  end
+
   private
 
   def competition_params
