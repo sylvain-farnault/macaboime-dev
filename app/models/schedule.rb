@@ -3,6 +3,8 @@ class Schedule < ApplicationRecord
   belongs_to :edition
   has_many :games
 
+  accepts_nested_attributes_for :games
+
 
   def next
     self.class.where("id > ?", id).first
