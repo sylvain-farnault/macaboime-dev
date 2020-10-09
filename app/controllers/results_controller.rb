@@ -12,7 +12,6 @@ class ResultsController < ApplicationController
 
   def update_results
     @schedule = Schedule.find(params[:schedule_id])
-
     if @schedule.update(schedule_params)
       redirect_to enter_results_path
     end
@@ -21,6 +20,6 @@ class ResultsController < ApplicationController
   private
 
    def schedule_params
-      params.require(:schedule).permit(games_attributes: [:id, :status])
+      params.require(:schedule).permit(games_attributes: [:id, :status, results_attributes: [:id, :mark, :points_award, :forfeit]])
    end
 end

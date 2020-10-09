@@ -1,3 +1,15 @@
 // Place all the styles related to the Results controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+option[value=played] {
+  background-color: green;
+}
+
+option[value=delayed] {
+  background-color: purple;
+}
+
+option[value=canceled] {
+  background-color: red;
+}
