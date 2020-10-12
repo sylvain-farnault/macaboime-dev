@@ -5,6 +5,6 @@ class Game < ApplicationRecord
   has_many :results
   accepts_nested_attributes_for :results
 
-  validates :stadium, uniqueness: { allow_blank: true, allow_nil: true }
+  # validates :stadium, uniqueness: { allow_blank: true, allow_nil: true }
   validates :schedule, presence: true
 end
