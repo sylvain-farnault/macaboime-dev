@@ -7,7 +7,7 @@
   <% if schedule.day.month == 10 %>
     <%= schedule.designation + ": " + schedule.day.strftime("%d/%m/%Y") %>
     <br>
-   <% schedule.games.each do |game| %>
+   <% schedule.games.order(:id).each do |game| %>
     <div class="game">
       <div class="team text-right">
         <%= game.results.first.team.team_names.last.name %>
