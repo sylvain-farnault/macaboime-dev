@@ -24,8 +24,9 @@ class CompetitionsController < ApplicationController
     end
   end
 
-  def display_championship_calendar(edition)
+  def display_championship_calendar()
 
+    raise
   end
 
   private
