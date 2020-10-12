@@ -1,0 +1,29 @@
+<h3>
+  <%= @schedule.edition.competition.name + " / " + @schedule.edition.season.years %>
+</h3>
+<h4>
+  <%= @schedule.designation + ": " + @schedule.day.strftime("%d/%m/%Y") %>
+</h4>
+
+<%= simple_form_for @schedule,
+                    method: :post,
+                    url: edition_schedule_results_path(@schedule.edition, @schedule) do |f| %>
+  <%= f.button :submit %>
+  <%= f.fields_for :games do |game| %>
+    <div class="results_game">
+      <div class="options">
+        <%= game.input :status, collection: %w(played delayed canceled), label: false %>
+        <%= game.association :stadium %>
+      </div>
+      <%= game.fields_for :results do |result| %>
+        <div class="results_team">
+          <%= result.input :mark, collection: 0..30, label: result.object.team_name %>
+          <%= result.input :forfeit, as: :boolean %>
+          <%= result.input :points_award, collection: [0,1,3] %>
+        </div>
+      <% end %>
+    </div>
+    <hr>
+  <% end %>
+  <%= f.submit %>
+<% end %>

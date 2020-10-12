@@ -9,9 +9,12 @@ Rails.application.routes.draw do
     resources :editions, only: [:index, :create]
     resources :editions, only: [:show] do
       resources :contestants, only: [:index, :create]
-      resources :schedules, only: [:index, :create]
+      resources :schedules, only: [:index, :create] do
+        post "results", to: "results#update_results"
+      end
       post "games", to: "schedules#generate_games"
     end
+    get "results", to: "results#enter_results", as: "enter_results"
   end
 
 end
