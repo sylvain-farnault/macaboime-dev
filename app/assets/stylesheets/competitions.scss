@@ -18,22 +18,48 @@
   // border: 1px solid green;
   width: 250px;
   background-color: rgba(200, 200, 200, 0.4);
-  padding: 0px 10px 0 10px;
+  white-space: nowrap;
 }
 
 .team:first-child {
   border-radius: 5px 0 0 5px;
+  padding: 0px 50px 0 10px;
 }
 .team:last-child {
   border-radius: 0 5px 5px 0;
+  padding: 0px 10px 0 50px;
 }
 
 .result {
-  // border: 5px solid rgba(200, 200, 200, 0.7);
+  // border: 5px solid rgba(200, 200, 200, 0.5);
+  border-radius: 10px;
   // margin: 0px 10px;
-  width: 50px;
+  height: 24px;
+  max-height: 24px;
+  width: 80px;
   display: flex;
   justify-content: center;
-  background-color: rgba(200, 200, 200, 0.7);
-  box-shadow: 0 0 4pt 0 rgba(200, 200, 200, 1);
+  align-items: center;
+  background-color: rgba(200, 200, 200, 0.5);
+  // box-shadow: 0 0 4pt 0 rgba(200, 200, 200, 1);
+  position: absolute;
+  font-size: 24px;
+  color: #333;
+
+  .status {
+    color: #a50000;
+    font-size: 16px;
+  }
+}
+
+.center-circle {
+  margin: 0 10px 0 10px;
+  font-size: 8px !important;
+  color: white;
+}
+
+.middle-line {
+  position: absolute;
+  height: 100%;
+  border: 1px solid white;
 }

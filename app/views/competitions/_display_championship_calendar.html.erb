@@ -3,10 +3,9 @@
   <%= edition.competition.name %>
   <%= edition.season.years %>
 </h3>
-
 <% edition.schedules.limit(2).each do |schedule| %>
   <% if schedule.day.month == 10 %>
-    <%= schedule.designation + "  " + schedule.day.strftime("%d/%m/%Y") %>
+    <%= schedule.designation + ": " + schedule.day.strftime("%d/%m/%Y") %>
     <br>
    <% schedule.games.each do |game| %>
     <div class="game">
@@ -15,7 +14,23 @@
       </div>
       <div class="result">
         <!-- display game results OR game status OR game stadium time -->
-        <%= "2-1" %>
+        <% if game.status == "delayed" %>
+          <span class="status">
+            <%= "Reporté" %>
+          </span>
+          <% elsif game.status == "played" %>
+            <strong>
+              <%= game.results.first.mark %>
+            </strong>
+            <%= fa_icon("circle", class: "center-circle") %>
+            <div class="middle-line"></div>
+            <strong>
+              <%= game.results.last.mark %>
+            </strong>
+            <% else %>
+            <%= fa_icon("circle", class: "center-circle") %>
+            <div class="middle-line"></div>
+        <% end %>
       </div>
       <div class="team">
         <%= game.results.last.team.team_names.last.name %>
