@@ -8,7 +8,9 @@
 <%= simple_form_for @schedule,
                     method: :post,
                     url: edition_schedule_results_path(@schedule.edition, @schedule) do |f| %>
-  <%= f.button :submit %>
+  <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+    <%= fa_icon("save") %> Update Results
+  <% end %>
   <%= f.fields_for :games do |game| %>
     <div class="results_game">
       <div class="options">
@@ -25,5 +27,7 @@
     </div>
     <hr>
   <% end %>
-  <%= f.submit %>
+  <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+    <%= fa_icon("save") %> Update Results
+  <% end %>
 <% end %>
