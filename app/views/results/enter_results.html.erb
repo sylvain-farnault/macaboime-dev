@@ -1,9 +1,9 @@
 <h3>
   <%= @schedule.edition.competition.name + " / " + @schedule.edition.season.years %>
 </h3>
-<div class="schedule-designation">
+<h4>
   <%= @schedule.designation + ": " + @schedule.day.strftime("%d/%m/%Y") %>
-</div>
+</h4>
 
 <%= simple_form_for @schedule,
                     method: :post,

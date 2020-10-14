@@ -2,6 +2,39 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
+.schedule-designation {
+  color: rgba(0, 153, 255, 0.8);
+  font-weight: bolder;
+  font-size: 24px;
+  // border: 1px solid red;
+  // width: 250px;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  line-height: 16px;
+  .info {
+    // border: 1px solid purple;
+    color: white;
+    font-weight: bolder;
+    font-size: 16px;
+    line-height: 16px;
+    border-left: 1px solid white;
+    padding-left: 10px;
+    margin-left: 10px;
+
+    // position: absolute;
+    // right: 0px;
+    // bottom: 0px;
+  }
+  .info::after {
+  content: "";
+  height: 100%;
+  display: inline-block;
+}
+}
 
 .game {
   // border: 1px solid red;

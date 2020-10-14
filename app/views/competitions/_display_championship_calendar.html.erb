@@ -4,8 +4,12 @@
 </h3>
 <% edition.schedules.limit(3).each do |schedule| %>
   <% if schedule.day.month == 10 %>
-    <%= schedule.designation + ": " + schedule.day.strftime("%d/%m/%Y") %>
-    <br>
+    <div class="schedule-designation">
+      <%= "Journée " + schedule.designation.split("J")[1] %>
+      <div class="info">
+        <%= schedule.day.strftime("%d/%m/%Y") %>
+      </div>
+    </div>
    <% schedule.games.order(:id).each do |game| %>
     <div class="game">
       <div class="team text-right">
