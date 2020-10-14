@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_12_095522) do
+ActiveRecord::Schema.define(version: 2020_10_14_134739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_095522) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "award_win", default: 3
     t.integer "award_draw", default: 1
-    t.integer "award_lose", default: 0
+    t.integer "award_loss", default: 0
     t.integer "award_forfeit", default: 0
     t.boolean "ratio_pts_by_match", default: false
   end
