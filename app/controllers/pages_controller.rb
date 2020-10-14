@@ -36,12 +36,12 @@ class PagesController < ApplicationController
           if diff > 0
             @ranking_datas[game.results.first.team_id][:points] += @current_championship_edition.competition.award_win
             @ranking_datas[game.results.first.team_id][:win] += 1
-            @ranking_datas[game.results.last.team_id][:points] += @current_championship_edition.competition.award_lose
+            @ranking_datas[game.results.last.team_id][:points] += @current_championship_edition.competition.award_loss
             @ranking_datas[game.results.last.team_id][:loss] += 1
           elsif diff < 0
             @ranking_datas[game.results.last.team_id][:points] += @current_championship_edition.competition.award_win
             @ranking_datas[game.results.last.team_id][:win] += 1
-            @ranking_datas[game.results.first.team_id][:points] += @current_championship_edition.competition.award_lose
+            @ranking_datas[game.results.first.team_id][:points] += @current_championship_edition.competition.award_loss
             @ranking_datas[game.results.first.team_id][:loss] += 1
           else
             @ranking_datas[game.results.first.team_id][:points] += @current_championship_edition.competition.award_draw

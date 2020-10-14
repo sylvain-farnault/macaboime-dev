@@ -2,7 +2,7 @@
   <%= edition.competition.name %>
   <%= edition.season.years %>
 </h3>
-<% edition.schedules.limit(2).each do |schedule| %>
+<% edition.schedules.limit(3).each do |schedule| %>
   <% if schedule.day.month == 10 %>
     <%= schedule.designation + ": " + schedule.day.strftime("%d/%m/%Y") %>
     <br>
