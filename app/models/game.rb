@@ -7,4 +7,8 @@ class Game < ApplicationRecord
 
   # validates :stadium, uniqueness: { allow_blank: true, allow_nil: true }
   validates :schedule, presence: true
+
+  def played?
+    status == "played"
+  end
 end

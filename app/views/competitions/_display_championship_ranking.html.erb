@@ -1,0 +1,33 @@
+<table class="ranking">
+  <tr>
+    <th></th>
+    <th>Pts</th>
+    <th>J</th>
+    <th>G</th>
+    <th>N</th>
+    <th>P</th>
+    <th>+/-</th>
+    <th>p.</th>
+    <th>c.</th>
+  </tr>
+  <% @ranking_datas.each do |k, team| %>
+    <tr>
+      <td class="bolder"><%= team[:name] %></td>
+      <td class="bolder"><%= team[:points] %></td>
+      <td><%= team[:played] %></td>
+      <td><%= team[:win] %></td>
+      <td><%= team[:draw] %></td>
+      <td><%= team[:loss] %></td>
+      <td class="bolder">
+        <% if team[:goals_diff] == 0 %>
+          <%= sprintf("% d", team[:goals_diff]) %>
+        <% else %>
+          <%= sprintf("%+d", team[:goals_diff]) %>
+        <% end %>
+      </td>
+      <td><%= team[:goals_for] %></td>
+      <td><%= team[:goals_against] %></td>
+
+    </tr>
+  <% end %>
+</table>

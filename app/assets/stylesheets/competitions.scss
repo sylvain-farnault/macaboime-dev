@@ -63,3 +63,49 @@
   height: 100%;
   border: 1px solid white;
 }
+
+
+.ranking {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ranking td, .ranking th {
+  // border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.ranking tr:nth-child(even){background-color: rgba(200, 200, 200, 0.5);}
+.ranking tr:nth-child(odd){background-color: rgba(200, 200, 200, 0.3);}
+.ranking tr:first-child{background-color: rgba(200, 200, 200, 0);}
+.ranking tr:last-child{
+  td:first-child {
+    border-radius: 0 0 0 10px;
+  }
+  td:last-child {
+    border-radius: 0 0 10px 0;
+  }
+}
+.ranking tr:nth-child(2){
+  td:first-child {
+    border-radius: 10px 0 0 0;
+  }
+  td:last-child {
+    border-radius: 0 10px 0 0;
+  }
+}
+
+.ranking tr:hover {background-color: rgba(200, 200, 200, 0.7);}
+.ranking tr:first-child:hover {background-color: rgba(200, 200, 200, 0.0);}
+
+.ranking th {
+  text-align: left;
+  color: rgba(0, 153, 255, 0.8);
+}
+
+.ranking td.bolder {
+  font-weight: bolder;
+
+}
+
