@@ -1,19 +1,27 @@
-
-<div class="wordCarousel">
-  <span></span>
+<div class="navbar">
   <div>
-<!--        Use classes 2,3, or 4 to match the number of words -->
-    <ul class="flip4">
-      <li>Respect</li>
-      <li>Fair Play</li>
-      <li>Sportivité</li>
-      <li>Convivialité</li>
-    </ul>
+    <h3>
+      <%= @current_championship_edition.competition.name %>
+    </h3>
+    <h4>
+      <%= @current_championship_edition.season.years %>
+    </h4>
   </div>
-  <%= image_tag "logo_silhouette_mouv.png" %>
+  <div class="wordCarousel">
+    <div>
+  <!--        Use classes 2,3, or 4 to match the number of words -->
+      <ul class="flip4">
+        <li>Respect</li>
+        <li>Fair Play</li>
+        <li>Sportivité</li>
+        <li>Convivialité</li>
+      </ul>
+    </div>
+    <%= image_tag "logo_silhouette_mouv.png" %>
+  </div>
 </div>
 <hr>
-<br>
+<%= render "pages/display_articles_carrousel" %>
 <%= render "competitions/display_championship_calendar", edition: @current_championship_edition %>
 <%= render "competitions/display_championship_ranking", edition: @current_championship_edition %>
 

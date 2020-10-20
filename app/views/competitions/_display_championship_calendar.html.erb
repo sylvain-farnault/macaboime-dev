@@ -1,7 +1,3 @@
-<h3>
-  <%= edition.competition.name %>
-  <%= edition.season.years %>
-</h3>
 <% edition.schedules.limit(3).each do |schedule| %>
   <% if schedule.day.month == 10 %>
     <div class="schedule-designation">
