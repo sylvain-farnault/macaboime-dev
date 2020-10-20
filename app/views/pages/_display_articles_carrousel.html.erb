@@ -1,1 +1,32 @@
-_display_articles_carrousel.html.erb
+<div class="carousel-box">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <%= image_tag('reunion_2020-09-29.jpg', style: 'width:100%;', class: "img-responsive center-block") %>
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Réunion de rentrée - 29/09/2020</h3>
+          <p>Merci à vous tous coaches et corps arbitral pour votre presence ...Bon championnat ...Et qu'on se régale</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag('football-amateur.jpg', style: 'width:110%;', class: "img-responsive center-block") %>
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Réunion de rentrée - 29/09/2020</h3>
+          <p>Merci à vous tous coaches et corps arbitral pour votre presence ...Bon championnat ...Et qu'on se régale</p>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>

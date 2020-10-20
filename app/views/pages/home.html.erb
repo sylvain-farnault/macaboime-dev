@@ -13,7 +13,10 @@
   <%= image_tag "logo_silhouette_mouv.png" %>
 </div>
 <hr>
-<br>
+<h3>
+  <%= @current_championship_edition.competition.name %>
+  <%= @current_championship_edition.season.years %>
+</h3>
 <%= render "pages/display_articles_carrousel" %>
 <%= render "competitions/display_championship_calendar", edition: @current_championship_edition %>
 <%= render "competitions/display_championship_ranking", edition: @current_championship_edition %>

@@ -103,3 +103,41 @@ body {
     99.99% { margin-top: 0px; }
     100% { margin-top: -270px; }
 }
+
+
+.carousel-box {
+  border: 1px solid lightblue;
+  width: 80%;
+  margin: 0 auto 20px auto;
+  overflow: hidden;
+  border-radius: 10px;
+  -webkit-box-shadow: 10px 10px 12px 0px rgba(255,255,255,0.34);
+  -moz-box-shadow: 10px 10px 12px 0px rgba(255,255,255,0.34);
+  box-shadow: 10px 10px 12px 0px rgba(255,255,255,0.34);
+}
+
+.carousel {
+  border: 1px solid orange;
+  width: 100%;
+   position: relative;
+   padding-top: 56.25%;
+
+}
+
+.carousel-inner {
+  border: 1px solid green;
+
+  position:  absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  font-size: 20px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.carousel-caption {
+  border: 1px solid purple;
+}
