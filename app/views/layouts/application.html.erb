@@ -4,6 +4,10 @@
     <title>Macaboime</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <% current_uri = request.env['PATH_INFO'] %>
+    <% unless current_uri.include?("power") %>
+      <meta name="google-site-verification" content="AJ8yNF05lqf_paVMT8DvWt8P3zX6FkX_lgfXEoYudlQ" />
+    <% end %>
     <link href="https://fonts.googleapis.com/css2?family=Frijole&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
