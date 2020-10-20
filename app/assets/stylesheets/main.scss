@@ -4,7 +4,7 @@
   font-family: 'Open Sans', sans-serif;
 }
 
-html, body {height: 100%;}
+// html, body {height: 100%;}
 
 body {
   background-image: image-url("logo_silhouette_mouv.png");
@@ -33,7 +33,15 @@ body {
   border-radius: 50px;
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
 
+  h1, h2, h3, h4 {
+    font-family: 'Frijole', cursive;
+  }
+}
 
 .wordCarousel {
     // border: 1px solid green;
@@ -104,28 +112,34 @@ body {
     100% { margin-top: -270px; }
 }
 
+@media (max-width: 768px) {
+  .flip4 {
+    display: none;
+  }
+}
+
 
 .carousel-box {
-  border: 1px solid lightblue;
+  // border: 1px solid lightblue;
   width: 80%;
-  margin: 0 auto 20px auto;
+  margin: 40px auto 40px auto;
   overflow: hidden;
   border-radius: 10px;
-  -webkit-box-shadow: 10px 10px 12px 0px rgba(255,255,255,0.34);
-  -moz-box-shadow: 10px 10px 12px 0px rgba(255,255,255,0.34);
-  box-shadow: 10px 10px 12px 0px rgba(255,255,255,0.34);
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(255,255,255,0.56);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(255,255,255,0.56);
+  box-shadow: 0px 0px 15px 0px rgba(255,255,255,0.56);
 }
 
 .carousel {
-  border: 1px solid orange;
+  // border: 1px solid orange;
   width: 100%;
-   position: relative;
-   padding-top: 56.25%;
+  position: relative;
+  padding-top: 66%;
 
 }
 
 .carousel-inner {
-  border: 1px solid green;
+  // border: 1px solid green;
 
   position:  absolute;
   top: 0;
@@ -136,8 +150,16 @@ body {
   font-size: 20px;
   display: flex;
   align-items: flex-end;
+  // height: 100%;
+}
+
+.carousel-item {
+  // border: 1px solid red;
+  // height: 100%;
 }
 
 .carousel-caption {
-  border: 1px solid purple;
+  // border: 1px solid purple;
+  background-color: rgba(0, 0,0, 0.3);
+  border-radius: 10px;
 }
