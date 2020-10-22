@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:home]
   def home
     # GET current championship edition instance that need to be send to the partial
     # See later the possibility to get season_years into path macaboime.fr/2020-2021
