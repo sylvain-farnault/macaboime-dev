@@ -20,6 +20,6 @@ class ResultsController < ApplicationController
   private
 
    def schedule_params
-      params.require(:schedule).permit(games_attributes: [:id, :status, :stadium_id, results_attributes: [:id, :mark, :points_award, :forfeit]])
+      params.require(:schedule).permit(games_attributes: [:id, :status, :stadium_id, :alternative_date, results_attributes: [:id, :mark, :points_award, :forfeit]])
    end
 end

@@ -14,6 +14,7 @@
   <%= f.fields_for :games do |game| %>
     <div class="results_game">
       <div class="options">
+        <%= game.input :alternative_date, as: :date, html5: true, label: "Date (si reporté)" %>
         <%= game.input :status, collection: %w(played delayed canceled), label: false %>
         <%= game.association :stadium %>
       </div>

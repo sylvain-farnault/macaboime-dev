@@ -23,6 +23,10 @@ option[value=canceled] {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+
+    div {
+      display: flex;
+    }
   }
 }
 
@@ -32,6 +36,14 @@ option[value=canceled] {
   background-color: rgba(200, 200, 200, 0.4);
   padding: 0px 10px 0 10px;
   border-left: 5px double grey;
+
+  div {
+    display: flex;
+  }
+
+  select {
+    width: 50px;
+  }
 }
 
 
