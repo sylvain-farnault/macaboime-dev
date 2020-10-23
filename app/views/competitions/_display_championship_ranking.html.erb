@@ -1,6 +1,7 @@
 <table class="ranking">
   <tr>
     <th></th>
+    <th></th>
     <th>Pts</th>
     <th>J</th>
     <th>G</th>
@@ -10,8 +11,10 @@
     <th>p.</th>
     <th>c.</th>
   </tr>
-  <% @ranking_datas.each do |k, team| %>
+  <% rank = 1 %>
+  <% @ranking_datas.each do |id, team| %>
     <tr>
+      <td class="rank"><%= "#{rank}. " %></td>
       <td class="bolder"><%= team[:name] %></td>
       <td class="bolder"><%= team[:points] %></td>
       <td><%= team[:played] %></td>
@@ -29,5 +32,6 @@
       <td><%= team[:goals_against] %></td>
 
     </tr>
+    <% rank += 1 %>
   <% end %>
 </table>
