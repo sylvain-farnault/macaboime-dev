@@ -1,6 +1,8 @@
 <h3>
   <%= @schedule.edition.competition.name + " / " + @schedule.edition.season.years %>
 </h3>
+<%= select(:schedule, :id, @schedule.edition.schedules.collect {|p| [ "#{p.designation} - #{p.day.strftime('%d/%m/%Y')}", p.id ] }, { include_blank: false }) %>
+
 <h4>
   <%= @schedule.designation + ": " + @schedule.day.strftime("%d/%m/%Y") %>
 </h4>
@@ -11,6 +13,7 @@
   <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
     <%= fa_icon("save") %> Update Results
   <% end %>
+  <%= f.input :day, as: :date, html5: true, label: false %>
   <%= f.fields_for :games do |game| %>
     <div class="results_game">
       <div class="options">

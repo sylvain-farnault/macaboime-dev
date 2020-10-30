@@ -26,7 +26,7 @@ window.addEventListener("load", event = () => {
   }
   if (window.location.pathname.includes("power/results")) {
     console.log("Let s go");
-    // change select style to be the same than selected option
+    // change game status select style to be the same than selected option
     // ...?
 
     // When forfeit checkbox is changed to true: set mark values to 0 and 3
@@ -82,6 +82,16 @@ window.addEventListener("load", event = () => {
       }
     }
     marks.forEach(mark => mark.addEventListener('input', updatePointsAward));
+
+    // WHEN Schedule select is change : load new url for selected schedule
+    schedule_select = document.querySelector("#schedule_id");
+    const loadNewURL = (event) => {
+      console.log(event.target.value);
+      console.log(window.location.href);
+      const url = "/power/results/"+event.target.value
+      window.location.replace(url);
+    }
+    schedule_select.addEventListener('change', loadNewURL);
   }
 
 });
