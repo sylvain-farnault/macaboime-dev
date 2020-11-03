@@ -30,33 +30,33 @@ window.addEventListener("load", event = () => {
     // ...?
 
     // When forfeit checkbox is changed to true: set mark values to 0 and 3
-    checkboxes = document.querySelectorAll("input[id*='_forfeit']");
-    const updateMarks = (event) => {
-      console.log(event.target);
-      const forfeit_mark = event.target.parentNode.parentNode.querySelector("select");
-      console.log(forfeit_mark);
+    forfeit_checkboxes = document.querySelectorAll("input[id*='_forfeit']");
+    const updateMarksOnForfeit = (event) => {
+      // console.log(event.target);
+      const forfeit_mark = event.target.parentNode.parentNode.parentNode.querySelector("select[name*='[mark]']");
+      // console.log(forfeit_mark);
       if (event.target.checked == true) {
-        forfeit_mark.parentNode.parentNode.parentNode.querySelectorAll("select[id*=_mark]").forEach(mark => {
+        // debugger;
+        forfeit_mark.parentNode.parentNode.parentNode.querySelectorAll("select[name*='[mark]']").forEach(mark => {
           if (mark != forfeit_mark) {
             forfeit_mark.value = 0;
             mark.value = 3;
+            updatePointsAward(mark);
           }
         });
       }
-      updatePointsAward(event);
     }
-    checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateMarks));
+    forfeit_checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateMarksOnForfeit));
 
-    // When marks change: set points_award to 3, 1 or 0
-    marks = document.querySelectorAll("select[id*=_mark]");
-    const updatePointsAward = (event) => {
-      current_mark = event.target;
+    const updatePointsAward = (target) => {
+      current_mark = target;
+      // console.log(current_mark);
+      // console.log(typeof(target));
+      // console.log('dddddddddddddddddddddddddddddd');
       if (current_mark.value) {
-        console.log(current_mark);
-        // Get opponent_mark
-        marks = current_mark.parentNode.parentNode.parentNode.querySelectorAll("select[id*=_mark]");
-        console.log(marks);
-        marks.forEach(mark => {
+        // Get game_marks (the 2 opponents marks)
+        game_marks = current_mark.parentNode.parentNode.parentNode.querySelectorAll("select[name*='[mark]']");
+        game_marks.forEach(mark => {
           // If opponent_mark not null && mark is the opponent mark
           if (mark != current_mark && mark.value != "") {
             // Compare marks
@@ -81,7 +81,11 @@ window.addEventListener("load", event = () => {
         console.log("Value not defined!!!");
       }
     }
-    marks.forEach(mark => mark.addEventListener('input', updatePointsAward));
+    // When marks change: set points_award to 3, 1 or 0
+    marks = document.querySelectorAll("select[name*='[mark]']");
+    marks.forEach(mark => mark.addEventListener('input', (event) => {
+      updatePointsAward(event.target);
+    }));
 
     // WHEN Schedule select is change : load new url for selected schedule
     schedule_select = document.querySelector("#schedule_id");

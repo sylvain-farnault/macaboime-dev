@@ -19,7 +19,7 @@ class ResultsController < ApplicationController
       # raise
       @schedule = Schedule.where(edition: edition).where("day < ?", Time.now).last
     end
-    @season_schedules = Schedule.where(edition_id: Edition.where(season: @schedule.edition.season))
+    @season_schedules = Schedule.where(edition_id: Edition.where(season: @schedule.edition.season)).order(:id)
   end
 
   def update_results
