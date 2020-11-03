@@ -20,7 +20,7 @@ class SchedulesController < ApplicationController
       @schedule.designation = "J" + sprintf("%02d",i)
       @schedule.edition = @edition
       if @schedule.save
-        i +=1
+        i += 1
         # then create next ones (date + 7 days) btw 2 schedules
         while i <= ((@edition.teams.count - 1) * 2)
           # create new schedule 7 days later
@@ -29,7 +29,7 @@ class SchedulesController < ApplicationController
             day: Schedule.all.last.day + 7,
             designation: "J" + sprintf("%02d",i))
           # increment round number
-          i +=1
+          i += 1
         end
         redirect_to edition_schedules_path(@edition)
       end

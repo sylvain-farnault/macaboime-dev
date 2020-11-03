@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       end
       post "games", to: "schedules#generate_games"
     end
-    get "results", to: "results#enter_results", as: "enter_results"
+    get "results(/:id)", to: "results#enter_results", as: "enter_results"
   end
 
 end

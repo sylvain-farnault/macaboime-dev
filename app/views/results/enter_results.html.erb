@@ -1,6 +1,8 @@
 <h3>
   <%= @schedule.edition.competition.name + " / " + @schedule.edition.season.years %>
 </h3>
+<%= select(:schedule, :id, @season_schedules.collect {|p| [ "#{p.designation} - #{p.day.strftime('%d/%m/%Y')}", p.id ] }, { include_blank: false }) %>
+
 <h4>
   <%= @schedule.designation + ": " + @schedule.day.strftime("%d/%m/%Y") %>
 </h4>
@@ -11,15 +13,19 @@
   <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
     <%= fa_icon("save") %> Update Results
   <% end %>
+  <%= f.input :day, as: :date, html5: true, label: false %>
+  <%= f.input :designation %>
   <%= f.fields_for :games do |game| %>
     <div class="results_game">
       <div class="options">
+        <%= game.input :alternative_date, as: :date, html5: true, label: "Date (si reporté)" %>
         <%= game.input :status, collection: %w(played delayed canceled), label: false %>
         <%= game.association :stadium %>
       </div>
       <%= game.fields_for :results do |result| %>
         <div class="results_team">
           <%= result.input :mark, collection: 0..30, label: result.object.team_name %>
+          <%= result.input :penalty_mark, collection: 0..30 %>
           <%= result.input :forfeit, as: :boolean %>
           <%= result.input :points_award, collection: [0,1,3] %>
         </div>
