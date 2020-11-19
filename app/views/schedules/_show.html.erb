@@ -1,11 +1,4 @@
-<% edition.schedules.limit(3).each do |schedule| %>
-    <div class="schedule-designation">
-      <%= "Journée " + schedule.designation.split("J")[1] %>
-      <div class="info">
-        <%= schedule.day.strftime("%d/%m/%Y") %>
-      </div>
-    </div>
-   <% schedule.games.order(:id).each do |game| %>
+<% @schedule.games.order(:id).each do |game| %>
     <div class="game">
       <div class="team text-right">
         <%= game.results.first.team.team_names.last.name %>
@@ -35,6 +28,3 @@
       </div>
     </div>
    <% end %>
-   <hr>
-
-<% end %>

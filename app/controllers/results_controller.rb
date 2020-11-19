@@ -19,6 +19,7 @@ class ResultsController < ApplicationController
       # raise
       @schedule = Schedule.where(edition: edition).where("day < ?", Time.now).last
     end
+    # select all schedules (all competition kinds) from the same season of that @schedule
     @season_schedules = Schedule.where(edition_id: Edition.where(season: @schedule.edition.season)).order(:id)
   end
 

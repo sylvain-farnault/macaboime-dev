@@ -1,8 +1,19 @@
 class SchedulesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:show]
+  respond_to :html, :js
+
   def index
     @edition = Edition.find(params[:edition_id])
     @schedules = Schedule.where(edition: params[:edition_id])
     @schedule = Schedule.new
+  end
+
+  def show
+    @schedule = Schedule.find(params[:id])
+    respond_to do |format|
+      format.js {render layout: false}
+      format.html
+    end
   end
 
   def create
