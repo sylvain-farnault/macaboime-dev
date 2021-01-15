@@ -98,6 +98,10 @@ window.addEventListener("load", event = () => {
     schedule_select.addEventListener('change', loadNewURL);
   }
 
+  if (window.location.pathname === "/") {
+    document.querySelector(".select_schedule > .active").click();
+  }
+
 });
 
 

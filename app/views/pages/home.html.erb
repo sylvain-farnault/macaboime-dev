@@ -23,14 +23,22 @@
 <hr>
 <%= render "pages/display_articles_carrousel" %>
 
+<% date_now = DateTime.now %>
+<% active = "" %>
+<% search_active = true %>
 <div class="select_schedule">
   <% @season_schedules.each do |schedule| %>
-    <span><%= link_to schedule.designation, schedule, remote: true %></span>
+    <% if search_active && date_now.mjd - schedule.day.mjd < 4 %>
+      <% active = "active" %>
+      <% search_active = false %>
+    <% end %>
+    <%= link_to schedule.designation, schedule, remote: true, class: "#{search_active ? "" : active}" %>
+    <% active = "" %>
   <% end %>
 </div>
 
-<div id="current_schedule">
-  Chargement...
+<div id="active_schedule">
+  <%= fa_icon("spinner", class: "rotating") %>
 </div>
 
 <%= render "competitions/display_championship_ranking", edition: @edition %>
