@@ -101,5 +101,10 @@ window.addEventListener("load", event = () => {
 });
 
 
+// Forfeit ID schedule_games_attributes_0_results_attributes_0_forfeit
+// Forfeit ID schedule_games_attributes_0_results_attributes_1_forfeit
+// Mark ID schedule_games_attributes_0_results_attributes_0_mark
+// Mark ID schedule_games_attributes_0_results_attributes_1_mark
+//
 
 
