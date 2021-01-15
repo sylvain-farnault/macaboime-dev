@@ -1,10 +1,10 @@
 <div class="navbar">
   <div>
     <h3>
-      <%= @current_championship_edition.competition.name %>
+      <%= @edition.competition.name %>
     </h3>
     <h4>
-      <%= @current_championship_edition.season.years %>
+      <%= @edition.season.years %>
     </h4>
   </div>
   <div class="wordCarousel">
@@ -22,7 +22,17 @@
 </div>
 <hr>
 <%= render "pages/display_articles_carrousel" %>
-<%= render "competitions/display_championship_calendar", edition: @current_championship_edition %>
-<%= render "competitions/display_championship_ranking", edition: @current_championship_edition %>
+
+<div class="select_schedule">
+  <% @season_schedules.each do |schedule| %>
+    <span><%= link_to schedule.designation, schedule, remote: true %></span>
+  <% end %>
+</div>
+
+<div id="current_schedule">
+  Chargement...
+</div>
+
+<%= render "competitions/display_championship_ranking", edition: @edition %>
 
 <br>
