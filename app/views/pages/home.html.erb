@@ -23,6 +23,7 @@
 <hr>
 <%= render "pages/display_articles_carrousel" %>
 
+<!-- Display schedule one by one -->
 <% date_now = DateTime.now %>
 <% active = "" %>
 <% search_active = true %>
@@ -41,6 +42,7 @@
   <%= fa_icon("spinner", class: "rotating") %>
 </div>
 
+<!-- Display championship ranking -->
 <%= render "competitions/display_championship_ranking", edition: @edition %>
 
 <br>
