@@ -99,7 +99,7 @@ window.addEventListener("load", event = () => {
   }
 
   if (window.location.pathname === "/") {
-    document.querySelector(".select_schedule > .active").click();
+    document.querySelector("#select-schedule > .active").click();
   }
 
 });

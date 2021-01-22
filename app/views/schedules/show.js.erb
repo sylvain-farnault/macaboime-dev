@@ -1,3 +1,26 @@
 console.log("Show schedule");
-document.querySelector("#active_schedule").innerHTML =
+document.querySelector("#active-schedule").innerHTML =
   "<%= escape_javascript(render partial: 'schedules/show', locals: { schedule: @schedule } ) %>";
+
+
+document.querySelector("#select-schedule > .active").classList.toggle("active");
+document.querySelector("[data-num='<%= @schedule.designation %>']").classList.toggle("active");
+
+
+
+if (document.readyState !== 'loading') {
+  console.log("Loaded");
+  const outerContent = document.querySelector("#select-schedule");
+  // console.log(outerContent.offsetHeight);
+  // console.log(outerContent.scrollHeight);
+
+  const activeElement = document.querySelector("#select-schedule > .active");
+  // console.log(activeElement.offsetHeight);
+  // console.log(activeElement.offsetTop);
+
+  outerContent.scrollTo(0,activeElement.offsetTop);
+}
+// else {
+//   document.addEventListener('DOMContentLoaded', eventHandler);
+// }
+
