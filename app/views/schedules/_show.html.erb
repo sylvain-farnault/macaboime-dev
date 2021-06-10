@@ -1,14 +1,22 @@
-<div class="schedule-designation">
-  <% if schedule.edition.competition.kind == "championship" %>
-    <%= "Journée " + schedule.designation.split("J")[1] %>
-  <% elsif schedule.edition.competition.kind == "cup" %>
-    <%= "Cup " + schedule.designation %>
-  <% else %>
-    <%= "Amical " + schedule.designation %>
+<div class="schedule-header">
+  <%= link_to schedule.previous, remote: true do %>
+    <%= fa_icon("chevron-circle-left") %>
   <% end %>
-  <div class="info">
-    <%= schedule.day.strftime("%d/%m/%Y") %>
+  <div class="schedule-designation">
+    <% if schedule.edition.competition.kind == "championship" %>
+      <%= "Journée " + schedule.designation.split("J")[1] %>
+    <% elsif schedule.edition.competition.kind == "cup" %>
+      <%= "Cup " + schedule.designation %>
+    <% else %>
+      <%= "Amical " + schedule.designation %>
+    <% end %>
+    <div class="info">
+      <%= schedule.day.strftime("%d/%m/%Y") %>
+    </div>
   </div>
+  <%= link_to schedule.next, remote: true do %>
+    <%= fa_icon("chevron-circle-right") %>
+  <% end %>
 </div>
 <% @schedule.games.order(:id).each do |game| %>
   <div class="game">

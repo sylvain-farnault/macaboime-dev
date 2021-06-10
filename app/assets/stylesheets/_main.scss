@@ -204,20 +204,25 @@ body {
 }
 
 #schedules {
-  // display: flex;
-  border: 1px solid green;
+  display: flex;
+  justify-content: center;
+  // border: 1px solid green;
 }
 
 #select-schedule {
-  border: 1px solid red;
-  display: flex;
+  border: 1px solid rgba(0,0,0,0.7);
+  border-radius: 4px;
+  background-color: rgba(0,0,0,0.3);
+  // display: flex;
   flex-direction: column;
   position: absolute;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 150px;
+  height: 200px;
   display: none;
   opacity: 0;
+  // z-index: 1000;
+  transition-duration: 0.4s;
 }
 
 #select-schedule::-webkit-scrollbar {
@@ -232,23 +237,62 @@ body {
     -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
 }
 
-.show-select {
+#select-schedule a {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.4);
+  font-size: 20px;
+  font-weight: bolder;
+  text-decoration: none;
+
+  .info {
+    // border: 1px solid purple;
+    color: white;
+    font-weight: bolder;
+    font-size: 16px;
+    // line-height: 16px;
+    // border-left: 1px solid white;
+    padding-left: 10px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+
+
+    // position: absolute;
+    // right: 0px;
+    // bottom: 0px;
+  }
+  .info::after {
+    /* content: "";
+    height: 100%;
+    display: inline-block; */
+  }
+}
+
+.show-select-schedule {
+  display: none;
   color: #09f;
   font-size: 24px;
-  filter: brightness(1) blur(2px);
+  filter: brightness(1) blur(1px);
   transition-duration: 0.4s;
 }
 
-.show-select:hover {
-  filter: brightness(1.2) blur(0);
+.show-select-schedule:hover {
+  filter: brightness(1.1) blur(0);
   // transform: skew(-10deg);
 }
 
 #active-schedule {
-  border: 1px solid pink;
-  display: flex;
+  // border: 1px solid pink;
+  // display: flex;
+  display: inline-block;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 
   i {font-size: 40px;}
+}
+
+.display-none {
+  display: none;
 }

@@ -8,6 +8,8 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
+import { showSelectSchedule } from '../components/schedules'
+
 // require("jquery");
 // import "bootstrap";
 
@@ -101,6 +103,8 @@ window.addEventListener("load", event = () => {
   if (window.location.pathname === "/") {
     document.querySelector("#select-schedule > .active").click();
   }
+
+  showSelectSchedule();
 
 });
 

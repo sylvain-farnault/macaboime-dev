@@ -23,7 +23,7 @@
 <hr>
 <%= render "pages/display_articles_carrousel" %>
 <div id="schedules">
-  <%= fa_icon("calendar", class: "show-select") %>
+  <%= fa_icon("calendar", class: "show-select-schedule") %>
   <!-- Schedules season list/links -->
   <% date_now = DateTime.now %>
   <% active = "" %>
@@ -34,7 +34,10 @@
         <% active = "active" %>
         <% search_active = false %>
       <% end %>
-      <%= link_to schedule.designation, schedule, remote: true, class: "#{search_active ? "" : active}", data: {num: schedule.designation} %>
+      <%= link_to schedule, remote: true, class: "#{search_active ? "" : active}", data: {num: schedule.designation} do %>
+        <%= schedule.designation %>
+        <span class="info"><%= schedule.day.strftime("%d/%m/%Y") %></span>
+      <% end %>
       <% active = "" %>
     <% end %>
   </div>
