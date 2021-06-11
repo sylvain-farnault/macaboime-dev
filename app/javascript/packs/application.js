@@ -106,8 +106,8 @@ window.addEventListener("load", event = () => {
       activeSchedule.click();
     } else {
       // if last schedule is to far in past
-      allSchedulesLinks = document.querySelectorAll("#select-schedule a");
-      lastScheduleLink = allSchedulesLinks[allSchedulesLinks.length - 1];
+      const allSchedulesLinks = document.querySelectorAll("#select-schedule a");
+      const lastScheduleLink = allSchedulesLinks[allSchedulesLinks.length - 1];
       lastScheduleLink.classList.add("active");
       lastScheduleLink.click();
     }
