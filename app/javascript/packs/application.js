@@ -101,7 +101,16 @@ window.addEventListener("load", event = () => {
   }
 
   if (window.location.pathname === "/") {
-    document.querySelector("#select-schedule > .active").click();
+    const activeSchedule = document.querySelector("#select-schedule > .active");
+    if (activeSchedule) {
+      activeSchedule.click();
+    } else {
+      // if last schedule is to far in past
+      allSchedulesLinks = document.querySelectorAll("#select-schedule a");
+      lastScheduleLink = allSchedulesLinks[allSchedulesLinks.length - 1];
+      lastScheduleLink.classList.add("active");
+      lastScheduleLink.click();
+    }
   }
 
   showSelectSchedule();
