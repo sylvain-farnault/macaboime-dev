@@ -9,11 +9,14 @@ class Schedule < ApplicationRecord
 
 
   def next
-    self.class.where("id > ?", id).first
+    next_schedule = self.class.where("id > ?", id).first
+    self.edition == next_schedule&.edition ? next_schedule : nil
+
   end
 
   def previous
-    self.class.where("id < ?", id).last
+    previous_schedule = self.class.where("id < ?", id).last
+    self.edition == previous_schedule&.edition ? previous_schedule : nil
   end
 
   def season
