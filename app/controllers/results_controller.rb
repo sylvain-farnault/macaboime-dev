@@ -11,13 +11,13 @@ class ResultsController < ApplicationController
       # define current season years (ex: 2020-2021)
       season_years = start_year.to_s + "-" + (start_year + 1).to_s
       # I use it to find the corresponding season instance
-      season = Season.where(years: season_years)
+      season = Season.where(years: season_years).first
       # And then corresponding edition
       # ### WARNING
       # I may have up to 3 editions (for friendly, championship and cup)
       edition = Edition.where(season: season)
       # raise
-      @schedule = Schedule.where(edition: edition).where("day < ?", Time.now).last
+      @schedule = Schedule.where(edition: edition).where("day < ?", Time.now).last || Schedule.where(edition: edition).first
     end
     # select all schedules (all competition kinds) from the same season of that @schedule
     @season_schedules = Schedule.where(edition_id: Edition.where(season: @schedule.edition.season)).order(:id)
