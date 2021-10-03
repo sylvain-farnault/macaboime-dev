@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :seasons, only: [:index, :create, :show, :destroy]
     resources :competitions, only: [:index, :create, :show, :destroy]
     resources :teams, only: [:index, :create, :show]
+    resources :stadiums, only: [:new, :create, :index, :edit, :update]
     resources :editions, only: [:index, :create]
     resources :editions, only: [:show] do
       resources :contestants, only: [:index, :create]
