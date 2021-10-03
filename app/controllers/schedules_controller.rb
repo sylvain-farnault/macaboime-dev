@@ -53,7 +53,7 @@ class SchedulesController < ApplicationController
     # Generate a RoundRobin for @edition.teams
     first_legs_games = RoundRobinTournament.schedule(@edition.teams.shuffle)
 
-    schedule = @edition.schedules.first
+    schedule = @edition.schedules.order(:created_at).first
     first_legs_games.each do |day|
       day.each do |game|
         new_game = Game.create(schedule: schedule)
