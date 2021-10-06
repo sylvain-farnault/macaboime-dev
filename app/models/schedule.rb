@@ -3,7 +3,7 @@ class Schedule < ApplicationRecord
   belongs_to :edition
   has_many :games
 
-  after_update :delay_all_season_schedules_day
+  # after_update :delay_all_season_schedules_day
 
   accepts_nested_attributes_for :games
 
