@@ -6,7 +6,28 @@ document.querySelector("#active-schedule").innerHTML =
 document.querySelector("#select-schedule > .active").classList.toggle("active");
 document.querySelector("[data-num='<%= @schedule.designation %>']").classList.toggle("active");
 
+const copyToClipboard = (event) => {
+  console.log("Action copy");
+  console.log(event.target);
+  let address = event.target.querySelector(".address-to-clipboard");
+  if (!address) {
+    address = event.target.parentElement.querySelector(".address-to-clipboard");
+  }
+  if (address) {
+    console.log(address.value);
+    address.select();
+    document.execCommand("copy");
+  }
+}
 
+const prepareActionsCopyToClipboard = () => {
+  const links = document.querySelectorAll(".link-copy-to-clipboard");
+  if (links) {
+    links.forEach( link => {
+      link.addEventListener("click", copyToClipboard);
+    });
+  }
+}
 
 if (document.readyState !== 'loading') {
   console.log("Loaded");
@@ -19,8 +40,9 @@ if (document.readyState !== 'loading') {
   // console.log(activeElement.offsetTop);
 
   outerContent.scrollTo(0,activeElement.offsetTop);
+
+  prepareActionsCopyToClipboard();
 }
 // else {
 //   document.addEventListener('DOMContentLoaded', eventHandler);
 // }
-
