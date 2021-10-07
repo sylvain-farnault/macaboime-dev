@@ -22,7 +22,7 @@ import { showSelectSchedule } from '../components/schedules'
 
 
 // Add "RED" background on admin(power) path
-window.addEventListener("load", event = () => {
+document.addEventListener('turbolinks:load', () => {
   if (window.location.pathname.includes("power")) {
     document.body.style.backgroundColor = "red";
   }
@@ -115,8 +115,5 @@ window.addEventListener("load", event = () => {
 
   showSelectSchedule();
 
+  console.log("Turbolink ok");
 });
-
-
-
-
