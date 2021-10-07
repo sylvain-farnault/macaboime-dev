@@ -1,0 +1,8 @@
+<% submit_label = stadium.persisted? ? "Mettre à jour" : "Ajouter le stade" %>
+
+<%= simple_form_for(stadium) do |f| %>
+    <%= f.input :name %>
+    <%= f.input :address %>
+    <%= f.input :kind, collection: Stadium::KIND %>
+    <%= f.submit submit_label, class: "btn btn-primary" %>
+<% end %>
