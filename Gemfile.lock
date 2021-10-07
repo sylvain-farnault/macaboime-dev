@@ -228,7 +228,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   devise
   font-awesome-rails
-  font-awesome-sass
+  font-awesome-sass (~> 5.15.1)
   jbuilder (~> 2.7)
   jquery-rails
   listen (~> 3.2)
@@ -251,4 +251,4 @@ RUBY VERSION
    ruby 2.6.6p146
 
 BUNDLED WITH
-   2.1.4
+   2.2.12
