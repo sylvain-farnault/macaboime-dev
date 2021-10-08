@@ -6,7 +6,7 @@ document.querySelector("#active-schedule").innerHTML =
 document.querySelector("#select-schedule > .active").classList.toggle("active");
 document.querySelector("[data-num='<%= @schedule.designation %>']").classList.toggle("active");
 
-const copyToClipboard = (event) => {
+var copyToClipboard = (event) => {
   console.log("Action copy");
   console.log(event.target);
   let address = event.target.querySelector(".address-to-clipboard");
@@ -20,7 +20,7 @@ const copyToClipboard = (event) => {
   }
 }
 
-const prepareActionsCopyToClipboard = () => {
+var prepareActionsCopyToClipboard = () => {
   const links = document.querySelectorAll(".link-copy-to-clipboard");
   if (links) {
     links.forEach( link => {
