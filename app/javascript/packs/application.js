@@ -117,3 +117,6 @@ document.addEventListener('turbolinks:load', () => {
 
   console.log("Turbolink ok");
 });
+
+require("trix")
+require("@rails/actiontext")

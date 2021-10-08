@@ -14,9 +14,11 @@
  *= require_self
  */
 
- @import "bootstrap/scss/bootstrap";
- @import "font-awesome-sprockets";
- @import "font-awesome";
+@import "bootstrap/scss/bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+@import "actiontext";
 
 @import 'competitions';
 @import 'results';
