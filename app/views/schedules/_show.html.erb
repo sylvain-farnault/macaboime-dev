@@ -55,6 +55,19 @@
           <%= game.stadium.name %> <%= fa_icon("copy") %>
           <%= text_field_tag "address", game.stadium.address, class: "address-to-clipboard" %>
         <% end %>
+        <%  case device
+            when 'ios'
+              url = "http://maps.apple.com/?q=#{game.stadium.address.gsub(/,\ |,|\ /, '+')}"
+            when 'android'
+              url = "https://www.google.com/maps/search/?api=1&query=#{game.stadium.address.gsub(/,\ |,|\ /, '+')}"
+            else
+              url = "https://www.google.fr/maps/place/#{game.stadium.address.gsub(/,\ |,|\ /, '+')}"
+            end
+        %>
+        &nbsp;&nbsp;
+        <%= link_to url, class: "link-navigation", target: "_blank" do %>
+          <%= fa_icon("map-marker") %>
+        <% end %>
       <% else %>
         --
       <% end %>
