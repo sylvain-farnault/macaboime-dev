@@ -32,7 +32,6 @@ document.addEventListener('turbolinks:load', () => {
     // ...?
 
     // When forfeit checkbox is changed to true: set mark values to 0 and 3
-    forfeit_checkboxes = document.querySelectorAll("input[id*='_forfeit']");
     const updateMarksOnForfeit = (event) => {
       // console.log(event.target);
       const forfeit_mark = event.target.parentNode.parentNode.parentNode.querySelector("select[name*='[mark]']");
@@ -48,16 +47,18 @@ document.addEventListener('turbolinks:load', () => {
         });
       }
     }
+    const forfeit_checkboxes = document.querySelectorAll("input[id*='_forfeit']");
     forfeit_checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateMarksOnForfeit));
 
+    // When marks change: set points_award to 3, 1 or 0
     const updatePointsAward = (target) => {
-      current_mark = target;
+      const current_mark = target;
       // console.log(current_mark);
       // console.log(typeof(target));
       // console.log('dddddddddddddddddddddddddddddd');
       if (current_mark.value) {
         // Get game_marks (the 2 opponents marks)
-        game_marks = current_mark.parentNode.parentNode.parentNode.querySelectorAll("select[name*='[mark]']");
+        const game_marks = current_mark.parentNode.parentNode.parentNode.querySelectorAll("select[name*='[mark]']");
         game_marks.forEach(mark => {
           // If opponent_mark not null && mark is the opponent mark
           if (mark != current_mark && mark.value != "") {
@@ -83,20 +84,19 @@ document.addEventListener('turbolinks:load', () => {
         console.log("Value not defined!!!");
       }
     }
-    // When marks change: set points_award to 3, 1 or 0
-    marks = document.querySelectorAll("select[name*='[mark]']");
+    const marks = document.querySelectorAll("select[name*='[mark]']");
     marks.forEach(mark => mark.addEventListener('input', (event) => {
       updatePointsAward(event.target);
     }));
 
     // WHEN Schedule select is change : load new url for selected schedule
-    schedule_select = document.querySelector("#schedule_id");
     const loadNewURL = (event) => {
       console.log(event.target.value);
       console.log(window.location.href);
       const url = "/power/results/"+event.target.value
       window.location.replace(url);
     }
+    const schedule_select = document.querySelector("#schedule_id");
     schedule_select.addEventListener('change', loadNewURL);
   }
 
