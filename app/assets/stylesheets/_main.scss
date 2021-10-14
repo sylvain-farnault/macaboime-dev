@@ -24,11 +24,12 @@ body {
   min-height: 100%;
 }
 
-.container {
+.main-container {
   // border: 1px solid green;
   color: white;
   background-color: rgba(27, 70, 96, 0.7);
   margin: 20px auto;
+  width: 70%;
   padding: 30px;
   border-radius: 50px;
 }
@@ -295,4 +296,12 @@ body {
 
 .display-none {
   display: none;
+}
+
+
+
+@media (max-width: 1024px) {
+  .main-container {
+      width: 100%;
+  }
 }
