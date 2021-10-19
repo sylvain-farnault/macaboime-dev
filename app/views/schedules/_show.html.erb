@@ -1,6 +1,6 @@
 <div class="schedule-header">
   <%= link_to schedule.previous, remote: true do %>
-    <%= fa_icon("chevron-circle-left") %>
+    <%= fa_icon("chevron-circle-left", class: "change-schedule") %>
   <% end %>
   <div class="schedule-designation">
     <% if schedule.edition.competition.kind == "championship" %>
@@ -15,7 +15,7 @@
     </div>
   </div>
   <%= link_to schedule.next, remote: true do %>
-    <%= fa_icon("chevron-circle-right") %>
+    <%= fa_icon("chevron-circle-right", class: "change-schedule") %>
   <% end %>
 </div>
 <% @schedule.games.order(:id).each do |game| %>
@@ -30,18 +30,23 @@
           <span class="status">
             <%= "Reporté" %>
           </span>
-          <% elsif game.status == "played" %>
-            <strong>
+        <% elsif game.status == "canceled" %>
+          <span class="status">
+            <%= "Annulé" %>
+          </span>
+        <% elsif game.status == "played" %>
+          <%= fa_icon("circle", class: "center-circle") %>
+          <div class="middle-line">
+            <div class="score">
               <%= game.results.first.mark %>
-            </strong>
-            <%= fa_icon("circle", class: "center-circle") %>
-            <div class="middle-line"></div>
-            <strong>
+            </div>
+            <div class="score">
               <%= game.results.last.mark %>
-            </strong>
-            <% else %>
-            <%= fa_icon("circle", class: "center-circle") %>
-            <div class="middle-line"></div>
+            </div>
+          </div>
+        <% else %>
+          <%= fa_icon("circle", class: "center-circle") %>
+          <div class="middle-line"></div>
         <% end %>
       </div>
       <div class="team">
