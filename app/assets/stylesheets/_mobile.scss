@@ -1,0 +1,50 @@
+@media (max-width: 1024px) {
+  body {
+     font-size: 24px;
+  }
+
+  .main-container {
+    width: 100%;
+    padding: 30px 0;
+  }
+
+  .schedule-header {
+    font-size: 32px;
+  }
+
+  .schedule-header .info {
+    font-size: 24px;
+    line-height: 24px;
+    padding-left: 18px;
+    margin-left: 18px;
+}
+
+  .change-schedule {
+    font-size: 72px !important;
+  }
+
+  .game-datas {
+    margin-bottom: 44px;
+  }
+
+  .result {
+    border-radius: 15px;
+    height: 36px;
+    max-height: 36px;
+  }
+
+  .score {
+    height: 36px;
+    line-height: 36px;
+  }
+
+  .stadium {
+    height: 36px;
+  }
+
+  .link-navigation i {
+    font-size: 36px !important;
+  }
+
+
+}
