@@ -112,6 +112,13 @@ ActiveRecord::Schema.define(version: 2021_10_08_151046) do
     t.index ["team_id"], name: "index_results_on_team_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "label", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["label"], name: "index_roles_on_label", unique: true
+  end
+
   create_table "schedules", force: :cascade do |t|
     t.bigint "edition_id", null: false
     t.date "day", null: false
