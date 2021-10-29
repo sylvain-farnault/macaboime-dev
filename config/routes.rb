@@ -19,5 +19,6 @@ Rails.application.routes.draw do
     end
     get "results(/:id)", to: "results#enter_results", as: "enter_results"
     resources :articles
+    resources :user_roles, only: [:index, :create, :destroy]
   end
 end
