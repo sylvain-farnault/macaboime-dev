@@ -1,0 +1,6 @@
+<%= simple_form_for @user_role do |f| %>
+  <%= f.association :user %>
+  <%= f.association :role %>
+  <%= f.submit %>
+  <span style="color: lightgoldenrodyellow;">Ajouter les nouveaux role via Rails C! ;)</span>
+<% end %>

@@ -1,0 +1,9 @@
+<h1>Users Roles</h1>
+<%= render 'form' %>
+<% @users.each do |user| %>
+  <%= user.email %>
+  <% user.roles.each do |role| %>
+    | <span class="<%= role.label %>"><%= role.label %></span>
+  <% end %>
+  <hr>
+<% end %>

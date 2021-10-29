@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_08_151046) do
+ActiveRecord::Schema.define(version: 2021_10_22_001757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,13 @@ ActiveRecord::Schema.define(version: 2021_10_08_151046) do
     t.index ["team_id"], name: "index_results_on_team_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "label", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["label"], name: "index_roles_on_label", unique: true
+  end
+
   create_table "schedules", force: :cascade do |t|
     t.bigint "edition_id", null: false
     t.date "day", null: false
@@ -150,6 +157,16 @@ ActiveRecord::Schema.define(version: 2021_10_08_151046) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_roles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "role_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_user_roles_on_user_id_and_role_id", unique: true
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -175,4 +192,6 @@ ActiveRecord::Schema.define(version: 2021_10_08_151046) do
   add_foreign_key "results", "teams"
   add_foreign_key "schedules", "editions"
   add_foreign_key "team_names", "teams"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
 end
