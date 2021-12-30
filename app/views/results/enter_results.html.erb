@@ -10,30 +10,93 @@
 <%= simple_form_for @schedule,
                     method: :post,
                     url: edition_schedule_results_path(@schedule.edition, @schedule) do |f| %>
-  <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-    <%= fa_icon("save") %> Update Results
-  <% end %>
-  <%= f.input :day, as: :date, html5: true, label: false %>
-  <%= f.input :designation %>
-  <%= f.fields_for :games do |game| %>
-    <div class="results_game">
-      <div class="options">
-        <%= game.input :alternative_date, as: :date, html5: true, label: "Date (si reporté)" %>
-        <%= game.input :status, collection: %w(played delayed canceled), label: false %>
-        <%= game.association :stadium %>
+
+  <div class="d-grid gap-2">
+    <%= button_tag(type: 'submit', class: "btn btn-warning") do %>
+      <%= fa_icon("check") %> Valider
+    <% end %>
+  </div>
+  <%= f.input :day, as: :date, html5: true, label: false if current_user.admin? %>
+  <%= f.input :designation if current_user.admin? %>
+  <%= f.fields_for :games, f.object.games do |game| %>
+    <div class="game-datas">
+      <div class="game-results">
+
+        <%= game.fields_for :results do |result| %>
+        <%# File.open("log.txt", "w") { |f| f.write result.inspect } %>
+          <% %>
+          <div class="team-result">
+
+            <!-- NOM EQUIPE -->
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-info btn-lg btn-block" disabled><%= result.object.team_name %></button>
+            </div>
+
+            <!-- SCORE -->
+            <div class="input-group input-group-lg mark-controls">
+              <span class="input-group-text" id="inputGroup-sizing-lg">
+                <%= fa_icon("minus-square", data: { step: "-1" } ) %>
+              </span>
+              <span class="input-group-text" id="inputGroup-sizing-lg" />
+                <%= fa_icon("plus-square", data: { step: "+1" } ) %>
+              </span>
+              <input  type="text" class="form-control numeric"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-lg"
+                      id="<%= "#{result.object_name.gsub(/[\[\]]+/, '_')}mark" %>"
+                      name="<%= "#{result.object_name}[mark]" %>"
+                      value ="<%= result.object.mark %>">
+            </div>
+
+            <!-- FORFAIT ? -->
+            <%= result.hidden_field :forfeit, value: '', id: "random" %>
+            <div class="switch-field">
+              <input  type="checkbox"
+                      id="<%= "#{result.object_name.gsub(/[\[\]]+/, '_')}forfeit" %>"
+                      name="<%= "#{result.object_name}[forfeit]" %>"
+                      <%= "checked" if result.object.forfeit %> />
+              <label for="<%= "#{result.object_name.gsub(/[\[\]]+/, '_')}forfeit" %>">Forfait</label>
+            </div>
+
+
+            <!-- PENALTIES SCORE -->
+            <%= result.input :penalty_mark, collection: 0..30 if @schedule.edition.competition.kind == "cup" %>
+
+            <!-- POINT GAGNE -->
+            <div class="input-group">
+              <select class="form-select" id="<%= "#{result.object_name.gsub(/[\[\]]+/, '_')}points_award" %>" name="<%= "#{result.object_name}[points_award]" %>" <%= "disabled" if !current_user.admin? %>>
+                <option value="">Cacul...</option>
+                <% [0, 1, 3].each do |value| %>
+                  <option value=<%= value %> <%= "selected" if result.object.points_award == value %>><%= value %></option>
+                <% end %>
+              </select>
+              <label class="input-group-text" for="<%= "#{result.object_name.gsub(/[\[\]]+/, '_')}points_award" %>">Point(s)</label>
+            </div>
+            <%= result.input :points_award, as: :hidden, label: false, input_html: { value: result.object.points_award } %>
+          </div>
+        <% end %>
       </div>
-      <%= game.fields_for :results do |result| %>
-        <div class="results_team">
-          <%= result.input :mark, collection: 0..30, label: result.object.team_name %>
-          <%= result.input :penalty_mark, collection: 0..30 %>
-          <%= result.input :forfeit, as: :boolean %>
-          <%= result.input :points_award, collection: [0,1,3] %>
+      <div class="game-options">
+        <%= game.association :stadium if current_user.admin? %>
+        <div class="input-group">
+          <label class="input-group-text" for="<%= "#{game.object_name.gsub(/[\[\]]+/, '_')}status" %>">Statut du match</label>
+          <select class="form-select" id="<%= "#{game.object_name.gsub(/[\[\]]+/, '_')}status" %>" name="<%= "#{game.object_name}[status]" %>">
+            <option value="">Le statut passe automatiquement à "Joué" lorsque les scores sont entrés</option>
+            <% [['Joué', 'played'], ['Reporté', 'delayed'] ,['Annulé', 'canceled']].each do |value| %>
+              <option value=<%= value.second %> <%= "selected" if game.object.status == value.second %>><%= value.first %></option>
+            <% end %>
+          </select>
         </div>
-      <% end %>
+        <%= game.input :alternative_date, as: :date, html5: true, label: "Date de report" if current_user.admin? %>
+      </div>
     </div>
     <hr>
   <% end %>
-  <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-    <%= fa_icon("save") %> Update Results
-  <% end %>
+  <div class="d-grid gap-2">
+    <%= button_tag(type: 'submit', class: "btn btn-warning") do %>
+      <%= fa_icon('check') %> Valider
+    <% end %>
+  </div>
 <% end %>
+<br>
+<br>
