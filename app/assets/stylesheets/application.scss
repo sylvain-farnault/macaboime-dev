@@ -24,3 +24,7 @@
 @import 'results';
 @import 'main';
 @import 'mobile';
+
+/* Bootstrap option */
+/* Affichage des icones de validation dans les inputs */
+$enable-validation-icons: true;

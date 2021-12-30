@@ -66,7 +66,7 @@ class PagesController < ApplicationController
   end
 
   def power
-
+    redirect_to enter_results_path if current_user.referee?
   end
 
   private

@@ -32,6 +32,7 @@ body {
   width: 70%;
   padding: 30px;
   border-radius: 50px;
+  text-align: center;
 }
 
 .navbar {
@@ -52,6 +53,9 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    ul {
+        list-style: none;
+    }
     div {
         // border: 1px solid blue;
         overflow: hidden;

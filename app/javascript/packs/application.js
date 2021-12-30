@@ -3,12 +3,15 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
 import { showSelectSchedule } from '../components/schedules'
+import { markControlsHandler } from '../components/mark_controls_handler'
+import { forfeitBtnHandler } from '../components/forfeit_btn_handler'
 
 // require("jquery");
 // import "bootstrap";
@@ -21,73 +24,13 @@ import { showSelectSchedule } from '../components/schedules'
 // const imagePath = (name) => images(name, true)
 
 
-// Add "RED" background on admin(power) path
 document.addEventListener('turbolinks:load', () => {
+  // Add "RED" background on admin(power) path
   if (window.location.pathname.includes("power")) {
     document.body.style.backgroundColor = "red";
   }
   if (window.location.pathname.includes("power/results")) {
     console.log("Let s go");
-    // change game status select style to be the same than selected option
-    // ...?
-
-    // When forfeit checkbox is changed to true: set mark values to 0 and 3
-    const updateMarksOnForfeit = (event) => {
-      // console.log(event.target);
-      const forfeit_mark = event.target.parentNode.parentNode.parentNode.querySelector("select[name*='[mark]']");
-      // console.log(forfeit_mark);
-      if (event.target.checked == true) {
-        // debugger;
-        forfeit_mark.parentNode.parentNode.parentNode.querySelectorAll("select[name*='[mark]']").forEach(mark => {
-          if (mark != forfeit_mark) {
-            forfeit_mark.value = 0;
-            mark.value = 3;
-            updatePointsAward(mark);
-          }
-        });
-      }
-    }
-    const forfeit_checkboxes = document.querySelectorAll("input[id*='_forfeit']");
-    forfeit_checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateMarksOnForfeit));
-
-    // When marks change: set points_award to 3, 1 or 0
-    const updatePointsAward = (target) => {
-      const current_mark = target;
-      // console.log(current_mark);
-      // console.log(typeof(target));
-      // console.log('dddddddddddddddddddddddddddddd');
-      if (current_mark.value) {
-        // Get game_marks (the 2 opponents marks)
-        const game_marks = current_mark.parentNode.parentNode.parentNode.querySelectorAll("select[name*='[mark]']");
-        game_marks.forEach(mark => {
-          // If opponent_mark not null && mark is the opponent mark
-          if (mark != current_mark && mark.value != "") {
-            // Compare marks
-            if (parseInt(mark.value) > parseInt(current_mark.value)) {
-              // set opponnent 3 pts and current 0 pt
-              mark.parentNode.parentNode.querySelector("select[id*=_points_award").value = 3;
-              current_mark.parentNode.parentNode.querySelector("select[id*=_points_award").value = 0;
-            } else if (parseInt(mark.value) < parseInt(current_mark.value)) {
-              // set current 3 pts and opponnent 0 pt
-              current_mark.parentNode.parentNode.querySelector("select[id*=_points_award").value = 3;
-              mark.parentNode.parentNode.querySelector("select[id*=_points_award").value = 0;
-            } else {
-              // both 1 pt
-              current_mark.parentNode.parentNode.querySelector("select[id*=_points_award").value = 1;
-              mark.parentNode.parentNode.querySelector("select[id*=_points_award").value = 1;
-            }
-          }
-        });
-        // get and set teams points_award values
-      } else {
-        // Set points_award to 0
-        console.log("Value not defined!!!");
-      }
-    }
-    const marks = document.querySelectorAll("select[name*='[mark]']");
-    marks.forEach(mark => mark.addEventListener('input', (event) => {
-      updatePointsAward(event.target);
-    }));
 
     // WHEN Schedule select is change : load new url for selected schedule
     const loadNewURL = (event) => {
@@ -98,6 +41,16 @@ document.addEventListener('turbolinks:load', () => {
     }
     const schedule_select = document.querySelector("#schedule_id");
     schedule_select.addEventListener('change', loadNewURL);
+
+    markControlsHandler();
+    forfeitBtnHandler();
+
+    const allPointsAwardInputs = document.querySelectorAll("select[name*='[points_award]']");
+    allPointsAwardInputs.forEach( input => {
+      input.addEventListener('change', () => {
+        console.log('Pts award just changed!!!');
+      });
+    });
   }
 
   if (window.location.pathname === "/") {
@@ -111,11 +64,10 @@ document.addEventListener('turbolinks:load', () => {
       lastScheduleLink.classList.add("active");
       lastScheduleLink.click();
     }
+
+    showSelectSchedule();
   }
 
-  showSelectSchedule();
-
-  console.log("Turbolink ok");
 });
 
 require("trix")
