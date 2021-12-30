@@ -53,6 +53,9 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    ul {
+        list-style: none;
+    }
     div {
         // border: 1px solid blue;
         overflow: hidden;
