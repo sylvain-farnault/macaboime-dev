@@ -26,14 +26,31 @@ class ResultsController < ApplicationController
   def update_results
     @schedule = Schedule.find(params[:schedule_id])
     if @schedule.update(schedule_params)
-      redirect_to enter_results_path(@schedule),
-      notice: "Schedule #{@schedule.designation} has been updated!"
+      redirect_to enter_results_path(@schedule), notice: "Schedule #{@schedule.designation} has been updated!"
     end
   end
 
   private
 
-   def schedule_params
-      params.require(:schedule).permit(:id, :day, :designation, games_attributes: [:id, :status, :stadium_id, :alternative_date, results_attributes: [:id, :mark, :penalty_mark, :points_award, :forfeit]])
-   end
+  def schedule_params
+    params.require(:schedule)
+          .permit(
+            :id,
+            :day,
+            :designation,
+            games_attributes: [
+              :id,
+              :status,
+              :stadium_id,
+              :alternative_date,
+              results_attributes: [
+                :id,
+                :mark,
+                :penalty_mark,
+                :points_award,
+                :forfeit
+              ]
+            ]
+          )
+  end
 end
