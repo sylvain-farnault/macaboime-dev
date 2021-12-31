@@ -19,7 +19,7 @@
   <% end %>
 </div>
 <% @schedule.games.order(:id).each do |game| %>
-  <div class="game-datas">
+  <div class="display-game-datas">
     <div class="game">
       <div class="team text-right">
         <%= game.results.first.team.team_names.last.name %>
