@@ -55,7 +55,7 @@
 
 .team {
   // border: 1px solid green;
-  width: 250px;
+  width: 290px;
   background-color: rgba(200, 200, 200, 0.4);
   white-space: nowrap;
 }
@@ -63,6 +63,7 @@
 .team:first-child {
   border-radius: 5px 0 0 0px;
   padding: 0px 60px 0 10px;
+  text-align: right;
 }
 .team:last-child {
   border-radius: 0 5px 0px 0;
