@@ -23,6 +23,38 @@ class Schedule < ApplicationRecord
     self.edition.season
   end
 
+  def self.delay_season_calendar_from_given_schedule(schedule_start)
+    return nil unless schedule_start.is_a? Schedule
+
+    current_season = schedule_start.edition.season
+    schedule_iterator = schedule_start
+    # while next schedule exist AND is still on the same season
+    # so I can continue iteration
+    while schedule_iterator
+      if schedule_iterator.next.present?
+        if schedule_iterator.next.edition.season == current_season
+          # take the next schedule day to the current schedule
+
+          schedule_iterator.update(day: schedule_iterator.next.day)
+          puts "[A] - #{schedule_iterator.designation}: #{schedule_iterator.day} --> #{schedule_iterator.next.day}"
+        else
+          # .next exist AND next season != current_season
+          # Add 7 days to the last schedule of the season
+
+          schedule_iterator.update(day: schedule_iterator.day + 7.days)
+          puts "[B] - #{schedule_iterator.designation}: #{schedule_iterator.day} --> #{schedule_iterator.day + 7.days}"
+        end
+      else
+        # It is the last schedule record
+        # Add 7 days to the last schedule of the season
+
+        schedule_iterator.update(day: schedule_iterator.day + 7.days)
+        puts "[C] - #{schedule_iterator.designation}: #{schedule_iterator.day} --> #{schedule_iterator.day + 7.days}"
+      end
+      schedule_iterator = schedule_iterator.next
+    end
+  end
+
   private
 
   def delay_all_season_schedules_day
