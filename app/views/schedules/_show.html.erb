@@ -37,11 +37,12 @@
         <% elsif game.status == "played" %>
           <%= fa_icon("circle", class: "center-circle") %>
           <div class="middle-line">
+            <% draw = game.results.first.mark == game.results.last.mark %>
             <div class="score">
-              <%= game.results.first.mark %>
+              <% if draw %><sub title="penalties">(<%= game.results.first.penalty_mark %>)</sub><% end %><%= game.results.first.mark %>
             </div>
             <div class="score">
-              <%= game.results.last.mark %>
+              <%= game.results.last.mark %><% if draw %><sub title="penalties">(<%= game.results.last.penalty_mark %>)</sub><% end %>
             </div>
           </div>
         <% else %>
