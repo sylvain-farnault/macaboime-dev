@@ -10,11 +10,13 @@
   <%= link_to "Edit", edit_article_path(article) %> |
   <%= link_to article_path(article), method: :delete, data: { confirm: "Pour de bon?" } do %>
     <%= fa_icon("trash") %>
+  <% end %> |
+  <%= link_to article_path(article) do %>
+    <%= fa_icon("eye") %>
   <% end %>
   <hr>
 
 <% end %>
-<hr>
 <%= link_to new_article_path do %>
   <%= fa_icon("plus") %> Nouveau
 <% end %>

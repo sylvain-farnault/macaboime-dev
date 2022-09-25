@@ -1,5 +1,6 @@
 <%= simple_form_for @article do |f| -%>
   <%= f.input :title %>
-  <%= f.rich_text_area :content %>
+  <%= f.text_area :content %>
+  <%= f.input :images, as: :file, input_html: { multiple: true } %>
   <%= f.submit %>
 <% end %>

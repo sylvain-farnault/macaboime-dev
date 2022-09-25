@@ -5,7 +5,7 @@ class Team < ApplicationRecord
   has_many :editions, through: :contestants
 
   def label_name
-    # have to be changed :
+    # TODO: has to be changed :
     # we need the right name regarding to edition.season.years
     team_names.last.name
   end
