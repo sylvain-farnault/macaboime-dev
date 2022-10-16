@@ -1,31 +1,47 @@
-<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Expand at xl</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarsExample06">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-        <div class="dropdown-menu" aria-labelledby="dropdown06">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-md-0">
-      <input class="form-control" type="text" placeholder="Search">
-    </form>
+<nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <div>
+      <%= link_to root_path, class: "navbar-logo" do %>
+        <%= image_tag "logo_silhouette_mouv.png", width: "80px" %>
+      <% end %>
+      <%= link_to "Macaboime", root_path, class:"navbar-brand" %>
+    </div>
+    <div class="wordCarousel">
+      <div>
+        <!--        Use classes 2,3, or 4 to match the number of words -->
+        <ul class="flip4">
+          <li>Respect</li>
+          <li>Fair Play</li>
+          <li>Sportivité</li>
+          <li>Convivialité</li>
+        </ul>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="offcanvas offcanvas-end bg-dark" data-bs-scroll="true" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title text-white" id="offcanvasNavbarLabel">Game &#9917;</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Saisons
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="offcanvasNavbarDropdown">
+              <% @seasons.each do |season| %>
+                <li>
+                  <%= link_to season.years, season_show_path(season), class: "dropdown-item" %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <%= image_tag "logo_silhouette_mouv.png", class: "m-5" %>
+    </div>
   </div>
 </nav>

@@ -96,8 +96,6 @@ GEM
     ffi (1.15.5)
     font-awesome-rails (4.7.0.8)
       railties (>= 3.2, < 8.0)
-    font-awesome-sass (5.15.1)
-      sassc (>= 1.11)
     globalid (1.0.0)
       activesupport (>= 5.0)
     http-accept (1.7.0)
@@ -272,7 +270,6 @@ DEPENDENCIES
   devise
   dotenv-rails
   font-awesome-rails
-  font-awesome-sass (~> 5.15.1)
   jbuilder (~> 2.7)
   jquery-rails
   listen (~> 3.2)
@@ -299,4 +296,4 @@ RUBY VERSION
    ruby 3.1.2p20
 
 BUNDLED WITH
-   2.3.7
+   2.3.23

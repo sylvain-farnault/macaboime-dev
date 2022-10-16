@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
   root to: 'pages#home'
+  get "saisons/:season_years", to: "pages#season_show", as: "season_show"
   resources :schedules, only: [:show]
+
   get "power", to: "pages#power"
   scope '/power' do
     resources :seasons, only: [:index, :create, :show, :destroy]

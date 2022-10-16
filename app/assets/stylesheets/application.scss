@@ -15,7 +15,6 @@
  */
 
 @import "bootstrap/scss/bootstrap";
-@import "font-awesome-sprockets";
 @import "font-awesome";
 
 @import "actiontext";
@@ -24,6 +23,7 @@
 @import 'results';
 @import 'main';
 @import 'mobile';
+@import 'navbar';
 
 /* Bootstrap option */
 /* Affichage des icones de validation dans les inputs */
