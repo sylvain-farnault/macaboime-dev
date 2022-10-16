@@ -1,7 +1,7 @@
 class Schedule < ApplicationRecord
   # attr_accessor :first_day
   belongs_to :edition
-  has_many :games
+  has_many :games, dependent: :destroy
 
   # after_update :delay_all_season_schedules_day
 
@@ -11,12 +11,21 @@ class Schedule < ApplicationRecord
   def next
     next_schedule = self.class.where("id > ?", id).first
     self.edition == next_schedule&.edition ? next_schedule : nil
+  end
 
+  def next_in_season
+    next_schedule = self.class.where("id > ?", id).first
+    self.season == next_schedule&.season ? next_schedule : nil
   end
 
   def previous
     previous_schedule = self.class.where("id < ?", id).last
     self.edition == previous_schedule&.edition ? previous_schedule : nil
+  end
+
+  def previous_in_season
+    previous_schedule = self.class.where("id < ?", id).last
+    self.season == previous_schedule&.season ? previous_schedule : nil
   end
 
   def season

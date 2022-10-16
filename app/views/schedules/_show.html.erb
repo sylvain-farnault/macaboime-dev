@@ -1,5 +1,5 @@
 <div class="schedule-header">
-  <%= link_to schedule.previous, remote: true do %>
+  <%= link_to schedule.previous_in_season, remote: true do %>
     <%= fa_icon("chevron-circle-left", class: "change-schedule") %>
   <% end %>
   <div class="schedule-designation">
@@ -14,7 +14,7 @@
       <%= schedule.day.strftime("%d/%m/%Y") %>
     </div>
   </div>
-  <%= link_to schedule.next, remote: true do %>
+  <%= link_to schedule.next_in_season, remote: true do %>
     <%= fa_icon("chevron-circle-right", class: "change-schedule") %>
   <% end %>
 </div>

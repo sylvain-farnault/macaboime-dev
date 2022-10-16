@@ -13,6 +13,7 @@ import { showSelectSchedule } from '../components/schedules'
 import { markControlsHandler } from '../components/mark_controls_handler'
 import { forfeitBtnHandler } from '../components/forfeit_btn_handler'
 
+
 // require("jquery");
 // import "bootstrap";
 
@@ -53,7 +54,7 @@ document.addEventListener('turbolinks:load', () => {
     });
   }
 
-  if (window.location.pathname === "/") {
+  if (window.location.pathname === "/" || window.location.pathname.includes("saisons/")) {
     const activeSchedule = document.querySelector("#select-schedule > .active");
     if (activeSchedule) {
       activeSchedule.click();

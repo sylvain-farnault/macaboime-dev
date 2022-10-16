@@ -2,7 +2,7 @@ class Game < ApplicationRecord
   belongs_to :schedule
   belongs_to :stadium, optional: true
 
-  has_many :results
+  has_many :results, dependent: :destroy
   accepts_nested_attributes_for :results
   default_scope { order(:id) }
 
