@@ -19,9 +19,10 @@ class PagesController < ApplicationController
     # See later the possibility to get season_years into path macaboime.fr/2020-2021
 
     season_years = params[:season_years] || SeasonsHelper::CurrentSeasonYears.get
-    season = Season.where(years: season_years)
+    season = Season.find_by(years: season_years)
     competition = Competition.where(kind: "championship")
     @edition = Edition.find_by(season: season, competition: competition)
+    @articles = season.articles.order(id: :desc) if season
 
     @ranking_datas = Competitions::Championship.new(edition: @edition).ranking_datas
 

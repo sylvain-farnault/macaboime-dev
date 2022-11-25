@@ -1,0 +1,63 @@
+.articles-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  cursor: grab;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  margin-bottom: 16px;
+}
+
+.articles-container::-webkit-scrollbar {
+  width: 16px;
+}
+
+.articles-container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+}
+
+.articles-container::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 4px rgba(238, 235, 235, 0.9);
+  border-radius: 8px;
+}
+
+
+.article-card {
+  width: 450px !important;
+  min-width: 450px !important;
+  max-width: 450px !important;
+  margin: 0 10px;
+  display: inline-block;
+  border-radius: 5px !important;
+  overflow: hidden !important;
+  box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.5);
+  background-color: transparent !important;
+
+  .btn-close {
+    background-color:rgba(255, 0, 0, 0.5);
+    padding: 8px;
+    border-radius: 20%;
+    border: 1px rgba(255, 0, 0, 0.9) solid;
+    margin: 4px;
+  }
+
+  .card-body {
+    background-color: rgba(33, 37, 41, 0.98);
+    box-shadow: 0px -10px 25px 25px rgba(33, 37, 41, 1);
+    color: white !important;
+    padding-top: 8px !important;
+
+    .card-title {
+      font-family: 'Marhey', cursive;
+      font-weight: bolder;
+    }
+    .card-text {
+      font-family: 'Josefin Sans', sans-serif !important;
+    }
+  }
+
+  .card-footer {
+    background-color: #2b2721;
+  }
+}

@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<div class="carousel-box">
+<div class="carousel-box"  style="display: none;">
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>
@@ -92,3 +92,62 @@
     </button>
   </div>
 </div>
+
+<h2>Dernières publications...</h2>
+<div class="card-group articles-container grabbing-scroll d-flex flex-row flex-nowrap">
+  <% articles.each do |article| %>
+    <div class="card article-card">
+      <%= cl_image_tag(article.images.first.key, class: "card-img-top") %>
+      <div class="card-body">
+        <h3 class="card-title text-primary"><%= article.title%></h3>
+        <%= simple_format(article.content.truncate(Article::MAX_CONTENT_LENGHT, separator: /\s/), class: "card-text") %>
+        <% if article.content.size > Article::MAX_CONTENT_LENGHT %>
+          <%= link_to "##{dom_id(article)}", class: "btn btn-secondary btn-sm", "data-bs-toggle" => "modal" do %>
+            <%= fa_icon("ellipsis-h") %> Tout voir
+          <% end %>
+        <% end %>
+      </div>
+      <div class="card-footer">
+        <small class="text-light float-start"><%= article.created_at.utc.strftime('%m/%d/%Y %H:%M')%></small>
+        <%= link_to "##{dom_id(article)}", class: "float-end", "data-bs-toggle" => "modal" do %>
+          <%= fa_icon("arrows-alt") %>
+        <% end %>
+      </div>
+    </div>
+    <%= render "articles/as_card_fullscreen", article: article %>
+  <% end %>
+</div>
+
+
+<script>
+  // Gestion du scroll vertical par grad
+  const slider = document.querySelector(".grabbing-scroll");
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  slider.addEventListener("mousedown", e => {
+    isDown = true;
+    slider.classList.add("active");
+    slider.style.cursor = 'grabbing';
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+  slider.addEventListener("mouseleave", () => {
+    isDown = false;
+    slider.classList.remove("active");
+    slider.style.cursor = 'grab';
+  });
+  slider.addEventListener("mouseup", () => {
+    isDown = false;
+    slider.classList.remove("active");
+    slider.style.cursor = 'grab';
+  });
+  slider.addEventListener("mousemove", e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = x - startX;
+    slider.scrollLeft = scrollLeft - walk;
+  });
+</script>

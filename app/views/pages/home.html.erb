@@ -4,7 +4,9 @@
   </h3>
 </div>
 <hr>
-<%= render "pages/display_articles_carrousel" %>
+<% if @articles.present? %>
+  <%= render "pages/display_articles_carrousel", articles: @articles %>
+<% end %>
 <div id="schedules">
   <%= fa_icon("calendar", class: "show-select-schedule") %>
   <!-- Schedules season list/links -->
