@@ -1,6 +1,8 @@
 <%= simple_form_for @article do |f| -%>
+<%= f.collection_select(:edition_id, Edition.all.order(id: :desc), :id, :label_for_select, {}, { class: "form-select"}) %>
   <%= f.input :title %>
-  <%= f.text_area :content %>
+  <%= f.label :content  %>
+  <%= f.text_area :content, class: "form-control", style:"height: 100px"  %>
   <%= f.input :images, as: :file, input_html: { multiple: true } %>
   <%= f.submit %>
 <% end %>

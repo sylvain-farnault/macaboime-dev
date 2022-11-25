@@ -16,8 +16,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    @article.season = Season.last
-    @article.edition = Edition.last
+    @article.season = @article.edition.season
     if @article.save
       redirect_to articles_path, notice: "\"#{@article.title}\" a bien été créé."
     else
@@ -31,6 +30,7 @@ class ArticlesController < ApplicationController
 
   def update
     if @article.update(article_params)
+      @article.update_columns(season_id: @article.edition.season.id)
       redirect_to articles_path, notice: "\"#{@article.title}\" a bien été créé."
     else
       render :new, alerte: "Attention ça foire!"
@@ -49,7 +49,7 @@ class ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :content, images: [])
+    params.require(:article).permit(:edition_id, :title, :content, images: [])
   end
 
   def set_article

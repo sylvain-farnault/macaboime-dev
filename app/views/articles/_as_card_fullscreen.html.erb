@@ -1,0 +1,16 @@
+<!-- Full screen modal -->
+<div class="modal fade" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" id="<%= dom_id(article) %>">
+  <div class="modal-dialog modal-dialog-centered" style="min-width: 96%;">
+    <div class="card article-card" style="min-width: 96% !important;">
+      <button type="button" class="btn-close text-light position-absolute top-0 end-0" data-bs-dismiss="modal"></button>
+      <%= cl_image_tag(article.images.first.key, class: "card-img-top") %>
+      <div class="card-body">
+        <h3 class="card-title text-primary"><%= article.title%></h3>
+        <%= simple_format(article.content, class: "card-text") %>
+      </div>
+      <div class="card-footer">
+        <small class="text-light float-start"><%= article.created_at.utc.strftime('%m/%d/%Y %H:%M')%></small>
+      </div>
+    </div>
+  </div>
+</div>

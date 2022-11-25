@@ -1,4 +1,6 @@
 class Article < ApplicationRecord
+  MAX_CONTENT_LENGHT = 144
+
   belongs_to :season
   belongs_to :edition
 
