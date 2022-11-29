@@ -28,8 +28,8 @@ class SeasonsController < ApplicationController
     @season = Season.find_by_years(params[:id])
     @edition = @season.editions.find{|e| e.competition.kind == "championship"}
     @teams = @edition.teams
+    @schedules = @edition.schedules.where("day < ?", Date.today)
   end
-
 
   private
 

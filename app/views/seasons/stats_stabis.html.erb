@@ -1,28 +1,25 @@
 <%
+  stats = {}
+  @teams.each do |team|
+    stats[team.id] = {
+      name: team.label_name,
+      stabi: 0,
+      played: 0
+    }
+  end
 
-stats = {}
-@teams.each do |team|
-  stats[team.id] = {
-    name: team.label_name,
-    total: 0
-  }
-end
-@schedules = @edition.schedules.where("day < ?", Date.today)
-
-@schedules.each do |schedule|
-  schedule.games do |game|
-    raise
+  @schedules.map{|s| s.games}.flatten.each do |game|
     # si match joué + terrain stabi + pas de forfait
-    if game.status == "played" && game.stadium.kind == "gravel" && game.results.pluck(:forfeit).exclude?(true)
-      raise
-      stats[game.results.first.team_id][total] += 1
-      stats[game.results.last.team_id][total] += 1
+    if ['played'].include?(game.status) && game.stadium.try(:kind) == "gravel" && game.results.pluck(:forfeit).exclude?(true)
+      stats[game.results.first.team_id][:stabi] += 1
+      stats[game.results.last.team_id][:stabi] += 1
+    end
+    if ['played'].include?(game.status) &&  game.results.pluck(:forfeit).exclude?(true)
+      stats[game.results.first.team_id][:played] += 1
+      stats[game.results.last.team_id][:played] += 1
     end
   end
-end
-
-
-
+  stats = stats.sort_by{|k, v| v[:played].zero? ? 0 : -(v[:stabi]/v[:played].to_f*100).round}.to_h
 %>
 <div class="top-page">
   <h3>
@@ -32,17 +29,21 @@ end
 <hr>
 <table class="table table-striped table-dark table-bordered">
     <thead>
-        <tr>
-            <th>Nom équipe</th>
-            <th>Nb matches sur stabi</th>
-        </tr>
+      <tr>
+        <th>Nom équipe</th>
+        <th>Matches joués</th>
+        <th>Matches stabi</th>
+        <th class="table-active">Pourcentage stabi</th>
+      </tr>
     </thead>
     <tbody>
     <% stats.each do |id, data| %>
       <tr>
-            <td><%= data[:name] %></td>
-            <td><%= data[:total] %></td>
-        </tr>
+        <td><%= data[:name] %></td>
+        <td><%= data[:played] %></td>
+        <td><%= data[:stabi] %></td>
+        <td class="table-active"><%= data[:played].zero? ? 0 : (data[:stabi]/data[:played].to_f*100).round %></td>
+      </tr>
     <% end %>
 
     </tbody>
