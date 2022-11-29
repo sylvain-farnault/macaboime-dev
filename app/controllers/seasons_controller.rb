@@ -24,6 +24,13 @@ class SeasonsController < ApplicationController
     end
   end
 
+  def stats_stabis
+    @season = Season.find_by_years(params[:id])
+    @edition = @season.editions.find{|e| e.competition.kind == "championship"}
+    @teams = @edition.teams
+  end
+
+
   private
 
   def season_params
