@@ -40,20 +40,37 @@
             </ul>
           </li>
           <% if current_user.present? && current_user.roles.present? %>
-                <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Gestion
-            </a>
-              <% if current_user.field_master? %>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="offcanvasNavbarDropdown">
-              <%= content_tag :li do %>
-                <%= link_to "Stats Stabis", stats_stabis_season_path(Season.last), class: "dropdown-item" %>
-              <% end %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Gestion
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="offcanvasNavbarDropdown">
 
-              <% end %>
+                <% if current_user.admin? || current_user.referee? %>
+                  <%= content_tag :li do %>
+                    <%= link_to "Saisie des résultats", enter_results_path, class: "dropdown-item" %>
+                  <% end %>
+                <% end %>
 
-            </ul>
-          </li>
+                <% if current_user.admin? || current_user.field_master? %>
+                  <%= content_tag :li do %>
+                    <%= link_to "Stats Stabis", stats_stabis_season_path(Season.last), class: "dropdown-item" %>
+                  <% end %>
+                <% end %>
+
+                <hr>
+
+                <% if current_user.admin? %>
+                  <li><%= link_to "Competitions", competitions_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Seasons", seasons_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Editions", editions_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Teams", teams_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Stadiums", stadiums_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Articles", articles_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Gestion des rôles", user_roles_path, class: "dropdown-item" %></li>
+                <% end %>
+              </ul>
+            </li>
           <% end %>
         </ul>
       </div>
