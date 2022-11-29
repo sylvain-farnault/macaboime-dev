@@ -31,7 +31,6 @@ class SeasonsController < ApplicationController
     @schedules = @edition.schedules.where("day < ?", Date.today)
   end
 
-
   private
 
   def season_params
