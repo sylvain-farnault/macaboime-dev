@@ -28,10 +28,10 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="SeasonDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Saisons
             </a>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="offcanvasNavbarDropdown">
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="SeasonDropdownMenu">
               <% @seasons.each do |season| %>
                 <li>
                   <%= link_to season.years, season_show_path(season), class: "dropdown-item" %>
@@ -41,10 +41,10 @@
           </li>
           <% if current_user.present? && current_user.roles.present? %>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="AdminDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Gestion
               </a>
-              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="offcanvasNavbarDropdown">
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="AdminDropdownMenu">
 
                 <% if current_user.admin? || current_user.referee? %>
                   <%= content_tag :li do %>
@@ -58,6 +58,12 @@
                   <% end %>
                 <% end %>
 
+                <% if current_user.admin? || current_user.publicator? %>
+                  <%= content_tag :li do %>
+                    <li><%= link_to "Publications", articles_path, class: "dropdown-item" %></li>
+                  <% end %>
+                <% end %>
+
                 <hr>
 
                 <% if current_user.admin? %>
@@ -66,7 +72,7 @@
                   <li><%= link_to "Editions", editions_path, class: "dropdown-item" %></li>
                   <li><%= link_to "Teams", teams_path, class: "dropdown-item" %></li>
                   <li><%= link_to "Stadiums", stadiums_path, class: "dropdown-item" %></li>
-                  <li><%= link_to "Articles", articles_path, class: "dropdown-item" %></li>
+                  <hr>
                   <li><%= link_to "Gestion des rôles", user_roles_path, class: "dropdown-item" %></li>
                 <% end %>
               </ul>
