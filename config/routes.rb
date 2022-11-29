@@ -7,7 +7,11 @@ Rails.application.routes.draw do
 
   get "power", to: "pages#power"
   scope '/power' do
-    resources :seasons, only: [:index, :create, :show, :destroy]
+    resources :seasons, only: [:index, :create, :show, :destroy] do
+      member do
+        get :stats_stabis
+      end
+    end
     resources :competitions, only: [:index, :create, :show, :destroy]
     resources :teams, only: [:index, :create, :show]
     resources :stadiums, only: [:new, :create, :index, :edit, :update]

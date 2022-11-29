@@ -39,6 +39,22 @@
               <% end %>
             </ul>
           </li>
+          <% if current_user.present? && current_user.roles.present? %>
+                <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Gestion
+            </a>
+              <% if current_user.field_master? %>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="offcanvasNavbarDropdown">
+              <%= content_tag :li do %>
+                <%= link_to "Stats Stabis", stats_stabis_season_path(Season.last), class: "dropdown-item" %>
+              <% end %>
+
+              <% end %>
+
+            </ul>
+          </li>
+          <% end %>
         </ul>
       </div>
       <%= image_tag "logo_silhouette_mouv.png", class: "m-5" %>

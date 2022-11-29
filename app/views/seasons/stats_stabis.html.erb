@@ -1,0 +1,49 @@
+<%
+
+stats = {}
+@teams.each do |team|
+  stats[team.id] = {
+    name: team.label_name,
+    total: 0
+  }
+end
+@schedules = @edition.schedules.where("day < ?", Date.today)
+
+@schedules.each do |schedule|
+  schedule.games do |game|
+    raise
+    # si match joué + terrain stabi + pas de forfait
+    if game.status == "played" && game.stadium.kind == "gravel" && game.results.pluck(:forfeit).exclude?(true)
+      raise
+      stats[game.results.first.team_id][total] += 1
+      stats[game.results.last.team_id][total] += 1
+    end
+  end
+end
+
+
+
+%>
+<div class="top-page">
+  <h3>
+    Matches sur stabi | Saison <%= @season.years %>
+  </h3>
+</div>
+<hr>
+<table class="table table-striped table-dark table-bordered">
+    <thead>
+        <tr>
+            <th>Nom équipe</th>
+            <th>Nb matches sur stabi</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% stats.each do |id, data| %>
+      <tr>
+            <td><%= data[:name] %></td>
+            <td><%= data[:total] %></td>
+        </tr>
+    <% end %>
+
+    </tbody>
+</table>
