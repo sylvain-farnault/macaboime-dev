@@ -54,7 +54,7 @@
 
                 <% if current_user.admin? || current_user.field_master? %>
                   <%= content_tag :li do %>
-                    <%= link_to "Stats Stabis", stats_stabis_season_path(Season.last), class: "dropdown-item" %>
+                    <%= link_to "Stats Stabilisés", stats_stabis_season_path(Season.last), class: "dropdown-item" %>
                   <% end %>
                 <% end %>
 
