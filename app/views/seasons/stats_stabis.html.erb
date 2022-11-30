@@ -4,7 +4,9 @@
     stats[team.id] = {
       name: team.label_name,
       stabi: 0,
-      played: 0
+      played: 0,
+      percent: 0,
+      percent_sum_for_next_game: 0
     }
   end
 
@@ -19,7 +21,8 @@
       stats[game.results.last.team_id][:played] += 1
     end
   end
-  stats = stats.sort_by{|k, v| v[:played].zero? ? 0 : -(v[:stabi]/v[:played].to_f*100).round}.to_h
+  stats.map{|k, v| v[:percent] = v[:played].zero? ? 0 : (v[:stabi]/v[:played].to_f*100).round }
+  stats = stats.sort_by{|k, v| [-v[:percent], v[:stabi].zero? ? v[:played]: -v[:played]] }.to_h
 %>
 <div class="top-page">
   <h3>
@@ -30,21 +33,38 @@
 <table class="table table-striped table-dark table-bordered">
     <thead>
       <tr>
-        <th>Nom équipe</th>
-        <th>Matches joués</th>
-        <th>Matches stabi</th>
-        <th class="table-active">Pourcentage stabi</th>
+        <th></th>
+        <th>Nb joués</th>
+        <th>Nb stabi</th>
+        <th class="table-active"><strong><u>% stabi</u></strong></th>
+        <th>Somme % prochain adversaire</th>
       </tr>
     </thead>
     <tbody>
-    <% stats.each do |id, data| %>
+    <% stats.each do |team_id, data| %>
       <tr>
         <td><%= data[:name] %></td>
         <td><%= data[:played] %></td>
         <td><%= data[:stabi] %></td>
-        <td class="table-active"><%= data[:played].zero? ? 0 : (data[:stabi]/data[:played].to_f*100).round %></td>
+        <td class="table-active text-warning"><strong><%= data[:percent] %></strong></td>
+        <%
+          games = @schedules.last.next.games
+          game = games.find{|g| g.results.pluck(:team_id).include?(team_id)}
+          opponent_id = game.results.where.not(team_id: team_id).first.team_id
+        %>
+        <td><%= stats[opponent_id][:percent] + data[:percent] %></td>
       </tr>
     <% end %>
 
     </tbody>
+    <tfoot>
+      <tr class="table-secondary fst-italic">
+        <td colspan="5">
+        <ul>
+          <li>Les matches comptabilisés exclus les reports ou forfaits.</li>
+          <li><u>Somme % prochain adversaire</u>: Cumul du % de l'équipe avec celui de son prochain adversaire.</li>
+        </ul>
+        </td>
+      </tr>
+    </tfoot>
 </table>
