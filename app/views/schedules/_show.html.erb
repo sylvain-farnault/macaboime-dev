@@ -1,3 +1,4 @@
+<% is_cup = schedule.edition.competition.kind == "cup" %>
 <div class="schedule-header">
   <%= link_to schedule.previous_in_season, remote: true do %>
     <%= fa_icon("chevron-circle-left", class: "change-schedule") %>
@@ -18,7 +19,7 @@
     <%= fa_icon("chevron-circle-right", class: "change-schedule") %>
   <% end %>
 </div>
-<% @schedule.games.order(:id).each do |game| %>
+<% schedule.games.order(:id).each do |game| %>
   <div class="display-game-datas">
     <div class="game">
       <div class="team text-right">
@@ -39,10 +40,10 @@
           <div class="middle-line">
             <% draw = game.results.first.mark == game.results.last.mark %>
             <div class="score">
-              <% if draw %><sub title="penalties">(<%= game.results.first.penalty_mark %>)</sub><% end %><%= game.results.first.mark %>
+              <% if draw && is_cup %><sub title="penalties">(<%= game.results.first.penalty_mark %>)</sub><% end %><%= game.results.first.mark %>
             </div>
             <div class="score">
-              <%= game.results.last.mark %><% if draw %><sub title="penalties">(<%= game.results.last.penalty_mark %>)</sub><% end %>
+              <%= game.results.last.mark %><% if draw && is_cup %><sub title="penalties">(<%= game.results.last.penalty_mark %>)</sub><% end %>
             </div>
           </div>
         <% else %>
