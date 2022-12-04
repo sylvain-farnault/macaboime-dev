@@ -6,23 +6,36 @@
       stabi: 0,
       played: 0,
       percent: 0,
-      percent_sum_for_next_game: 0
+      percent_sum_for_next_game: 0,
+      resident_home_next_game: false
     }
   end
 
   @schedules.map{|s| s.games}.flatten.each do |game|
-    # si match joué + terrain stabi + pas de forfait
-    if ['played'].include?(game.status) && game.stadium.try(:kind) == "gravel" && game.results.pluck(:forfeit).exclude?(true)
-      stats[game.results.first.team_id][:stabi] += 1
-      stats[game.results.last.team_id][:stabi] += 1
-    end
-    if ['played'].include?(game.status) &&  game.results.pluck(:forfeit).exclude?(true)
+    if ['played'].include?(game.status) && game.results.pluck(:forfeit).exclude?(true)
+      # si match joué + pas de forfait
       stats[game.results.first.team_id][:played] += 1
       stats[game.results.last.team_id][:played] += 1
+      if game.stadium.try(:kind) == "gravel"
+        # si terrain stabi
+        stats[game.results.first.team_id][:stabi] += 1
+        stats[game.results.last.team_id][:stabi] += 1
+      end
     end
   end
-  stats.map{|k, v| v[:percent] = v[:played].zero? ? 0 : (v[:stabi]/v[:played].to_f*100).round }
-  stats = stats.sort_by{|k, v| [-v[:percent], v[:stabi].zero? ? v[:played]: -v[:played]] }.to_h
+  stats.each{ |team_id, data|
+    data[:percent] = data[:played].zero? ? 0 : (data[:stabi]/data[:played].to_f*100).round
+  }
+  stats.each{ |team_id, data|
+    next_schedule_games = @schedules.last.next.games
+    next_game = next_schedule_games.find{|g| g.results.pluck(:team_id).include?(team_id)}
+    next_opponent_id = next_game.results.where.not(team_id: team_id).first.team_id
+    data[:percent_sum_for_next_game] = stats[next_opponent_id][:percent] + data[:percent]
+    if next_game.results.map(&:team).any?(&:is_resident?)
+      data[:resident_home_next_game] = true
+    end
+  }
+  stats = stats.sort_by{|k, v| [-v[:percent_sum_for_next_game], -v[:percent], v[:stabi].zero? ? v[:played]: -v[:played]] }.to_h
 %>
 <div class="top-page">
   <h3>
@@ -47,12 +60,9 @@
         <td><%= data[:played] %></td>
         <td><%= data[:stabi] %></td>
         <td class="table-active text-warning"><strong><%= data[:percent] %></strong></td>
-        <%
-          games = @schedules.last.next.games
-          game = games.find{|g| g.results.pluck(:team_id).include?(team_id)}
-          opponent_id = game.results.where.not(team_id: team_id).first.team_id
-        %>
-        <td><%= stats[opponent_id][:percent] + data[:percent] %></td>
+        <td class="<%= 'table-secondary' if data[:resident_home_next_game] %>">
+          <%= data[:percent_sum_for_next_game] %><%= ' (chez résident)' if data[:resident_home_next_game] %>
+        </td>
       </tr>
     <% end %>
 
