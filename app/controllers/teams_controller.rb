@@ -23,7 +23,7 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:description)
+    params.require(:team).permit(:description, :resiednt)
   end
 
   def team_name_params
