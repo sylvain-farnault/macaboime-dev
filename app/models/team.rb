@@ -1,5 +1,5 @@
 class Team < ApplicationRecord
-  attr_accessor :name, :used_since
+  attr_accessor :name, :used_since, :resident
   has_many :team_names
   has_many :contestants
   has_many :editions, through: :contestants
