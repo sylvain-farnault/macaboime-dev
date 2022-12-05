@@ -31,7 +31,7 @@
     next_game = next_schedule_games.find{|g| g.results.pluck(:team_id).include?(team_id)}
     next_opponent_id = next_game.results.where.not(team_id: team_id).first.team_id
     data[:percent_sum_for_next_game] = stats[next_opponent_id][:percent] + data[:percent]
-    if next_game.results.map(&:team).any?(&:is_resident?)
+    if next_game.results.map(&:team).any?(&:resident?)
       data[:resident_home_next_game] = true
     end
   }
