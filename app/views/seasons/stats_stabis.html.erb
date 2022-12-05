@@ -27,12 +27,14 @@
     data[:percent] = data[:played].zero? ? 0 : (data[:stabi]/data[:played].to_f*100).round
   }
   stats.each{ |team_id, data|
-    next_schedule_games = @schedules.last.next.games
-    next_game = next_schedule_games.find{|g| g.results.pluck(:team_id).include?(team_id)}
-    next_opponent_id = next_game.results.where.not(team_id: team_id).first.team_id
-    data[:percent_sum_for_next_game] = stats[next_opponent_id][:percent] + data[:percent]
-    if next_game.results.map(&:team).any?(&:resident?)
-      data[:resident_home_next_game] = true
+    next_schedule_games = @schedules.last.next.try(:games)
+    if next_schedule_games
+      next_game = next_schedule_games.find{|g| g.results.pluck(:team_id).include?(team_id)}
+      next_opponent_id = next_game.results.where.not(team_id: team_id).first.team_id
+      data[:percent_sum_for_next_game] = stats[next_opponent_id][:percent] + data[:percent]
+      if next_game.results.map(&:team).any?(&:resident?)
+        data[:resident_home_next_game] = true
+      end
     end
   }
   stats = stats.sort_by{|k, v| [-v[:percent_sum_for_next_game], -v[:percent], v[:stabi].zero? ? v[:played]: -v[:played]] }.to_h
