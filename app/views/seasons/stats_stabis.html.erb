@@ -12,11 +12,11 @@
   end
 
   @schedules.map{|s| s.games}.flatten.each do |game|
-    if ['played'].include?(game.status) && game.results.pluck(:forfeit).exclude?(true)
+    if ['played'].include?(game.status)
       # si match joué + pas de forfait
       stats[game.results.first.team_id][:played] += 1
       stats[game.results.last.team_id][:played] += 1
-      if game.stadium.try(:kind) == "gravel"
+      if game.stadium.try(:kind) == "gravel" && game.results.pluck(:forfeit).exclude?(true)
         # si terrain stabi
         stats[game.results.first.team_id][:stabi] += 1
         stats[game.results.last.team_id][:stabi] += 1
