@@ -13,11 +13,11 @@
 
   @schedules.map{|s| s.games}.flatten.each do |game|
     if ['played'].include?(game.status)
-      # si match joué + pas de forfait
+      # si match joué
       stats[game.results.first.team_id][:played] += 1
       stats[game.results.last.team_id][:played] += 1
       if game.stadium.try(:kind) == "gravel" && game.results.pluck(:forfeit).exclude?(true)
-        # si terrain stabi
+        # si terrain stabi + pas de forfait
         stats[game.results.first.team_id][:stabi] += 1
         stats[game.results.last.team_id][:stabi] += 1
       end
@@ -27,7 +27,7 @@
     data[:percent] = data[:played].zero? ? 0 : (data[:stabi]/data[:played].to_f*100).round
   }
   stats.each{ |team_id, data|
-    next_schedule_games = @schedules.last.next.try(:games)
+    next_schedule_games = @schedules.where("day < ?", Date.today).last.next.try(:games)
     if next_schedule_games
       next_game = next_schedule_games.find{|g| g.results.pluck(:team_id).include?(team_id)}
       next_opponent_id = next_game.results.where.not(team_id: team_id).first.team_id
