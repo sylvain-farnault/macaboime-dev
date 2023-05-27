@@ -56,7 +56,9 @@
       </div>
     </div>
     <div class="stadium">
-
+      <% if game.alternative_date.present? && game.alternative_date != schedule.day %>
+        <%= game.alternative_date.strftime("%d/%m/%Y") %>&nbsp;
+      <% end %>
       <% if game.stadium %>
         <%= content_tag :div, class: "link-copy-to-clipboard", title: "#{game.stadium.address}" do %>
           <%= game.stadium.name %> <%= fa_icon("copy") %>
