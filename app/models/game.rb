@@ -12,4 +12,8 @@ class Game < ApplicationRecord
   def played?
     status == "played"
   end
+
+  def day
+    alternative_date || schedule.day
+  end
 end
