@@ -19,7 +19,7 @@
     <%= fa_icon("chevron-circle-right", class: "change-schedule") %>
   <% end %>
 </div>
-<% schedule.games.order(:id).each do |game| %>
+<% schedule.games.sort_by(&:day).each do |game| %>
   <div class="display-game-datas">
     <div class="game">
       <div class="team text-right">
