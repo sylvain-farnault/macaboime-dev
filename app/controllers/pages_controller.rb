@@ -27,6 +27,6 @@ class PagesController < ApplicationController
     @ranking_datas = Competitions::Championship.new(edition: @edition).ranking_datas
 
     # select all schedules (all competition kinds) from the same season of that @schedule
-    @season_schedules = Schedule.where(edition_id: Edition.where(season: @edition.season)).order(:id)
+    @season_schedules = Schedule.where(edition_id: Edition.where(season: @edition.season)).order(:id) if @edition
   end
 end

@@ -1,39 +1,47 @@
-<div class="top-page">
-  <h3>
-    Saison <%= @edition.season.years %>
-  </h3>
-</div>
-<hr>
-<% if @articles.present? %>
-  <%= render "pages/display_articles_carrousel", articles: @articles %>
+<% unless @edition %>
+  <div class="top-page">
+    <h3>
+      La prochaine saison arrive...
+    </h3>
+  </div>
+<% else %>
+  <div class="top-page">
+    <h3>
+      Saison <%= @edition.season.years %>
+    </h3>
+  </div>
+  <hr>
+  <% if @articles.present? %>
+    <%= render "pages/display_articles_carrousel", articles: @articles %>
+  <% end %>
+  <div id="schedules">
+    <%= fa_icon("calendar", class: "show-select-schedule") %>
+    <!-- Schedules season list/links -->
+    <% date_now = DateTime.now %>
+    <% active = "" %>
+    <% search_active = true %>
+    <div id="select-schedule">
+      <% @season_schedules.each do |schedule| %>
+        <% if search_active && date_now.mjd - schedule.day.mjd < 4 %>
+          <% active = "active" %>
+          <% search_active = false %>
+        <% end %>
+        <%= link_to schedule, remote: true, class: "#{search_active ? "" : active}", data: {num: schedule.designation} do %>
+          <%= schedule.designation %>
+          <span class="info"><%= schedule.day.strftime("%d/%m/%Y") %></span>
+        <% end %>
+        <% active = "" %>
+      <% end %>
+    </div>
+
+    <!-- Display active schedule -->
+    <div id="active-schedule">
+      <%= fa_icon("spinner", class: "rotating") %>
+    </div>
+  </div>
+
+  <!-- Display championship ranking -->
+  <%= render "competitions/display_championship_ranking", edition: @edition %>
+
+  <br>
 <% end %>
-<div id="schedules">
-  <%= fa_icon("calendar", class: "show-select-schedule") %>
-  <!-- Schedules season list/links -->
-  <% date_now = DateTime.now %>
-  <% active = "" %>
-  <% search_active = true %>
-  <div id="select-schedule">
-    <% @season_schedules.each do |schedule| %>
-      <% if search_active && date_now.mjd - schedule.day.mjd < 4 %>
-        <% active = "active" %>
-        <% search_active = false %>
-      <% end %>
-      <%= link_to schedule, remote: true, class: "#{search_active ? "" : active}", data: {num: schedule.designation} do %>
-        <%= schedule.designation %>
-        <span class="info"><%= schedule.day.strftime("%d/%m/%Y") %></span>
-      <% end %>
-      <% active = "" %>
-    <% end %>
-  </div>
-
-  <!-- Display active schedule -->
-  <div id="active-schedule">
-    <%= fa_icon("spinner", class: "rotating") %>
-  </div>
-</div>
-
-<!-- Display championship ranking -->
-<%= render "competitions/display_championship_ranking", edition: @edition %>
-
-<br>
