@@ -8,6 +8,9 @@ module Competitions
     def ranking_datas
       ranking_datas = {}
       # All teams contestant in that Edition
+
+      return ranking_datas unless @edition
+
       @edition.teams.each { |team|
         ranking_datas[team.id] = initialize_datas
         ranking_datas[team.id][:id] = team.id
