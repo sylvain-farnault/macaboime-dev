@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :user_roles
   has_many :roles, through: :user_roles
 
-  # user instant will respond to :admin? :player? (any role_name as :role_name?)
+  # user instance will respond to :admin? :player? (any role_name as :role_name?)
   def method_missing(m, *args, &block)
     if Role.pluck(:label).include?(m.to_s.gsub('?', '')) && m[-1] == '?'
       self.roles.pluck(:label).include?(m.to_s.gsub('?', '')) ? true : false
