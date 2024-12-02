@@ -33,6 +33,8 @@ export default class extends Controller {
     this.mainContentTarget.style.width = `calc(100% - ${this.stadiumTarget.offsetWidth - (parseFloat(heightMatchContainer)*parseFloat(baseFontSize))}px)`
     this.mainContentTarget.classList.add('expanded')
     this.buttonTarget.classList.add('active')
+    this.buttonTarget.querySelector("i.fa").classList.add("fa-angle-double-right")
+    this.buttonTarget.querySelector("i.fa").classList.remove("fa-angle-double-left")
     this.buttonTarget.style.backgroundColor = "rgba(200, 200, 200, 1)";
     this.scoreTarget.style.marginLeft = 0;
     this.scoreTarget.style.marginRight = 0;
@@ -53,6 +55,8 @@ export default class extends Controller {
     this.mainContentTarget.classList.remove('expanded')
     this.buttonTarget.classList.remove('active')
     this.buttonTarget.style.backgroundColor = "rgba(200, 200, 200, 0.2)";
+    this.buttonTarget.querySelector("i.fa").classList.add("fa-angle-double-left")
+    this.buttonTarget.querySelector("i.fa").classList.remove("fa-angle-double-right")
     this.scoreTarget.style.marginLeft = "1rem";
     this.scoreTarget.style.marginRight = "1rem";
 
