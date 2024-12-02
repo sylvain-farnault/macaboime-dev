@@ -60,3 +60,14 @@ if (document.readyState !== 'loading') {
 // else {
 //   document.addEventListener('DOMContentLoaded', eventHandler);
 // }
+
+if (window.StimulusApplication) {
+  requestAnimationFrame(() => {
+    window.StimulusApplication.stop()
+    window.StimulusApplication.start()
+    
+    // Vérification après reconnexion
+    //const controllers = document.querySelectorAll('[data-controller="games"]')
+    //console.log("Nombre de contrôleurs games trouvés:", controllers.length)
+  });
+}

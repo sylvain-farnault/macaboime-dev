@@ -63,6 +63,6 @@ Rails.application.configure do
   # DEVISE config
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.hosts << "a8db-217-13-50-20.ngrok.io"
+  config.hosts << ".ngrok-free.app"
 
 end

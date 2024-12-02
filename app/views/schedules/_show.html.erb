@@ -19,68 +19,51 @@
     <%= fa_icon("chevron-circle-right", class: "change-schedule") %>
   <% end %>
 </div>
-<% schedule.games.sort_by(&:day).each do |game| %>
-  <div class="display-game-datas">
-    <div class="game">
-      <div class="team text-right">
-        <%= game.results.first.team.team_names.last.name %>&nbsp;<%= fa_icon("flag", class: "forfeit-flag", title: "Forfait") if game.results.first.forfeit %>
-      </div>
-      <div class="result">
-        <!-- display game results OR game status OR game stadium time -->
-        <% if game.status == "delayed" %>
-          <span class="status">
-            <%= "Reporté" %>
-          </span>
-        <% elsif game.status == "canceled" %>
-          <span class="status">
-            <%= "Annulé" %>
-          </span>
-        <% elsif game.status == "played" %>
-          <%= fa_icon("circle", class: "center-circle") %>
-          <div class="middle-line">
-            <% draw = game.results.first.mark == game.results.last.mark %>
-            <div class="score">
-              <% if draw && is_cup %><sub title="penalties">(<%= game.results.first.penalty_mark %>)</sub><% end %><%= game.results.first.mark %>
-            </div>
-            <div class="score">
-              <%= game.results.last.mark %><% if draw && is_cup %><sub title="penalties">(<%= game.results.last.penalty_mark %>)</sub><% end %>
-            </div>
-          </div>
-        <% else %>
-          <%= fa_icon("circle", class: "center-circle") %>
-          <div class="middle-line"></div>
-        <% end %>
-      </div>
-      <div class="team">
-        <%= fa_icon("flag", class: "forfeit-flag", title: "Forfait") if game.results.last.forfeit %>&nbsp;<%= game.results.last.team.team_names.last.name %>
-      </div>
-    </div>
-    <div class="stadium">
-      <% if game.alternative_date.present? && game.alternative_date != schedule.day %>
-        <%= game.alternative_date.strftime("%d/%m/%Y") %>&nbsp;
-      <% end %>
-      <% if game.stadium %>
-        <%= content_tag :div, class: "link-copy-to-clipboard", title: "#{game.stadium.address}" do %>
-          <%= game.stadium.name %> <%= fa_icon("copy") %>
-          <%= text_field_tag "address", game.stadium.address, class: "address-to-clipboard" %>
-        <% end %>
-        <%  case device
-            when 'ios'
-              url = "http://maps.apple.com/?q=#{game.stadium.address.gsub(/,\ |,|\ /, '+')}"
-            when 'android'
-              url = "https://www.google.com/maps/search/?api=1&query=#{game.stadium.address.gsub(/,\ |,|\ /, '+')}"
-            else
-              url = "https://www.google.fr/maps/place/#{game.stadium.address.gsub(/,\ |,|\ /, '+')}"
-            end
-        %>
-        &nbsp;&nbsp;
-        <%= link_to url, class: "link-navigation", target: "_blank" do %>
-          <%= fa_icon("map-marker") %>
-        <% end %>
-      <% else %>
-        --
-      <% end %>
 
+<div class="modern-matches">
+  <% schedule.games.sort_by(&:day).each do |game| %>
+    <div class="match-container" data-controller="games">
+      <!-- Div stade qui apparaitra -->
+      <div data-games-target="stadium" class="stadium-overlay">
+        <%= game.stadium&.name || '--' %>
+      </div>
+
+      <!-- Barre principale -->
+      <div data-games-target="mainContent" class="match-bar">
+        <div class="team team-left">
+          <span class="team-name-full"><%= game.results.first.team.team_names.last.name %></span>
+          <span class="team-name-short"><%= game.results.first.team.team_names.last.name.first(5).upcase %></span>
+          <%= fa_icon("flag", class: "forfeit-flag", title: "Forfait") if game.results.first.forfeit %>
+        </div>
+
+        <div data-games-target="score" class="score-section">
+          <% if game.status == "delayed" %>
+            <span class="status-text">Reporté</span>
+          <% elsif game.status == "canceled" %>
+            <span class="status-text">Annulé</span>
+          <% elsif game.status == "played" %>
+            <% draw = game.results.first.mark == game.results.last.mark %>
+            <div class="score-display">
+              <div class="score-number left">
+                <% if draw && is_cup %><sub class="penalty">(<%= game.results.first.penalty_mark %>)</sub><% end %><%= game.results.first.mark %>
+              </div>
+              <div class="score-number right">
+                <%= game.results.last.mark %><% if draw && is_cup %><sub class="penalty">(<%= game.results.last.penalty_mark %>)</sub><% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="team team-right">
+          <%= fa_icon("flag", class: "forfeit-flag", title: "Forfait") if game.results.last.forfeit %>
+          <span class="team-name-full"><%= game.results.last.team.team_names.last.name %></span>
+          <span class="team-name-short"><%= game.results.last.team.team_names.last.name.first(4).upcase %></span>
+        </div>
+
+        <button data-games-target="button" data-action="click->games#toggle" class="stadium-btn">
+          <%= fa_icon("map-marker") %>
+        </button>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

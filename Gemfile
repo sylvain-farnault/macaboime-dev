@@ -62,6 +62,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'cloudinary', '~> 1.22.0'
 
+gem 'stimulus-rails'
 
 gem 'net-smtp', require: false
 gem 'net-imap', require: false
