@@ -19,11 +19,13 @@
 
 @import "actiontext";
 
+@import 'articles';
 @import 'competitions';
-@import 'results';
 @import 'main';
 @import 'mobile';
 @import 'navbar';
+@import 'results';
+@import "games";
 
 /* Bootstrap option */
 /* Affichage des icones de validation dans les inputs */

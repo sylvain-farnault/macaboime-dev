@@ -2,17 +2,31 @@
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
-
-
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
+// Configure your import map in config/importmap.rb ????
+// Chargement de Stimulus
+import { Application } from "@hotwired/stimulus"
+import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers"
+console.log("Début chargement application.js");
+
+const application = Application.start()
+// Modifier le chemin pour pointer au bon endroit
+const context = require.context("../controllers", true, /\.js$/)
+application.load(definitionsFromContext(context))
+
+// Rendre l'application disponible globalement
+window.StimulusApplication = application
+
+console.log("Application Stimulus chargée");
+
+
 import { showSelectSchedule } from '../components/schedules'
 import { markControlsHandler } from '../components/mark_controls_handler'
 import { forfeitBtnHandler } from '../components/forfeit_btn_handler'
-
 
 // require("jquery");
 // import "bootstrap";

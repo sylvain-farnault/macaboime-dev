@@ -1,3 +1,251 @@
-// Place all the styles related to the Games controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+:root {
+  --base-font-size: 16px;
+  --height-match-container: 2.5rem;
+}
+@media (max-width: 768px) {
+  :root {
+    --height-match-container: 3.5rem;
+  }
+}
+
+// Style du conteneur principal
+#active-schedule {
+  // border: 1px solid pink;
+  // display: flex;
+  display: inline-block;
+  // display: block;  // au lieu de inline-block
+  // flex-direction: column;
+  // justify-content: center;
+  margin: 0 auto;  // centre horizontalement
+  align-items: center; 
+  width: 800px; // limite la largeur maximale
+
+  @media (max-width: 768px) {
+    width: 100%;     // prend toute la largeur disponible
+  }
+
+  i {font-size: 40px;}
+}
+
+// En-tête avec navigation
+.modern-schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+
+  .nav-arrow {
+    font-size: 2.5rem;
+    color: #09f;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: lighten(#09f, 10%);
+    }
+  }
+
+  .schedule-title {
+    text-align: center;
+    
+    .main-title {
+      color: #09f;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+    
+    .date {
+      color: #fff;
+      font-size: 1rem;
+    }
+  }
+}
+
+// Conteneur des matches
+.modern-matches {
+  padding: 0 1rem;
+  
+  .match-container {
+    position: relative;
+    margin-bottom: 0.75rem;
+    height: var(--height-match-container);
+  }
+
+  // Barre principale du match
+  .match-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--height-match-container);
+    width: 100%;
+    background-color: rgba(60, 75, 90, 0.9);
+    border: 2px solid rgba(200, 200, 200, 0.5);
+    border-radius: 1.75rem;
+    padding: 0;
+    transition: width 0.3s ease;
+    z-index: 2;
+
+    .team {
+      flex: 1;
+      padding: 0 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+
+      .team-name-short {
+        display: none;
+      }
+  
+      @media (max-width: 768px) {
+        .match-bar.expanded .team-name-full {
+          display: none;
+        }
+        
+        .match-bar.expanded .team-name-short {
+          display: inline;
+          letter-spacing: 0.05em;
+        }
+      }
+      
+      &.team-left {
+        text-align: right;
+      }
+
+      .forfeit-flag {
+        color: #ff4444;
+        margin: 0 0.25rem;
+      }
+    }
+
+    .score-section {
+      width: 7.5rem;
+      min-width: 7.5rem;
+      height: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 0;
+      margin: 0 1rem;
+      background-color: rgba(200, 200, 200, 0.4);
+      border: 1px solid rgba(200, 200, 200, 0.8);
+      border-radius: 16px;
+      
+      // Ligne verticale
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: rgba(200, 200, 200, 0.5);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      // Point central
+      &::after {
+        content: "";
+        width: 0.75rem;
+        height: 0.75rem;
+        background: white;
+        border-radius: 50%;
+        border: 2px solid rgba(200, 200, 200, 0.5);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+
+      .status-text {
+        color: #ff4444;
+        position: relative;
+        z-index: 2;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .score-display {
+        position: relative;
+        z-index: 2;
+        color: #2c3957;
+        font-weight: bold;
+        font-size: 1.4rem;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        .score-number {
+          position: absolute;
+          
+          &.left {
+            right: calc(50% + 1.0rem);
+          }
+          
+          &.right {
+            left: calc(50% + 1.0rem);
+          }
+        }
+
+        .penalty {
+          font-size: 0.9rem;
+          position: relative;
+          top: -0.25rem;
+          margin: 0 0.125rem;
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .stadium-btn {
+      width: var(--height-match-container);
+      height: var(--height-match-container);
+      padding: 0;
+      margin: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(200, 200, 200, 0.5);
+      background: none;
+      color: #09f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      position: absolute;
+      right: -2px;
+      top: -2px;
+      //font-size: 32px !important;
+
+      i {
+        font-size: 2.25rem !important;
+      }
+
+      &:hover {
+        background-color: rgba(200, 200, 200, 0.2);
+      }
+    }
+  }
+
+  // Overlay du stade
+  .stadium-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background-color: rgba(32, 124, 55, 0.2);
+    border: 2px solid rgba(200, 200, 200, 0.5);
+    border-radius: 1.75rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem 0 3.75rem;
+    min-width: 10rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+}

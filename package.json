@@ -2,6 +2,8 @@
   "name": "macaboime_dev",
   "private": true,
   "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "@rails/actioncable": "^6.0.0",
     "@rails/actiontext": "^6.0.3-3",
     "@rails/activestorage": "^6.0.0",
@@ -15,7 +17,7 @@
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
   },
-  "engines" : {
-    "node" : ">=14.x <16.0.0"
+  "engines": {
+    "node": ">=14.x <16.0.0"
   }
 }
