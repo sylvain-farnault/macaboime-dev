@@ -27,4 +27,7 @@ Rails.application.routes.draw do
     resources :articles
     resources :user_roles, only: [:index, :create, :destroy]
   end
+
+  # Path related to registering preferences in client browser cookies
+  post 'update_preferences', to: 'preferences#update'
 end
