@@ -1,0 +1,45 @@
+<!-- Modal -->
+<div class="modal fade" id="modalOptions" tabindex="-1" aria-labelledby="modalOptionsLabel" aria-hidden="true" data-controller="preferences">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalOptionsLabel">Vos préférences</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-preferences-target="closeModal"></button>
+      </div>
+      
+      <div class="modal-body">
+        <%= form_tag(update_preferences_path, method: :post, remote: true, id: 'preferences-form', data: { "preferences-target": 'form' }) do %>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <div class="mb-3">
+            <label for="favorite_team" class="form-label">Votre équipe favorite</label>
+            <%= select_tag :favorite_team,
+              options_from_collection_for_select(@teams, "id", "name"),
+              class: 'form-select',
+              prompt: "Sélectionnez votre équipe" %>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label d-block">Toujours afficher les stades</label>
+            <div class="btn-group" role="group">
+              <input type="radio" class="btn-check" name="always_show_stadium" id="show_stadium_yes" value="true">
+              <label class="btn btn-outline-success" for="show_stadium_yes">Oui</label>
+              
+              <input type="radio" class="btn-check" name="always_show_stadium" id="show_stadium_no" value="false" checked>
+              <label class="btn btn-outline-danger" for="show_stadium_no">Non</label>
+            </div>
+          </div>
+
+          <div class="form-text mb-3">
+            En validant, vous acceptez l'utilisation de cookies pour enregistrer vos préférences.
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Supprimer les cookies</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <%= submit_tag "Enregistrer", class: "btn btn-primary", data: { action: "click->preferences#submit" } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

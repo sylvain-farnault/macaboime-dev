@@ -9,4 +9,8 @@ class Team < ApplicationRecord
     # we need the right name regarding to edition.season.years
     team_names.last.name
   end
+
+  def name
+    label_name
+  end
 end

@@ -3,6 +3,7 @@ class PagesController < ApplicationController
   before_action :datas_for_season, only: [:home, :season_show]
 
   def home
+    @teams = Team.all
   end
 
   def power
