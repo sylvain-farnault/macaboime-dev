@@ -4,6 +4,8 @@
 
 import { application } from "./application"
 
+import PreferencesController from "./preferences_controller"
+application.register("preferences", PreferencesController)
+
 import GamesController from "./games_controller"
-console.log("Chargement de l'index des controllers")
 application.register("games", GamesController)
