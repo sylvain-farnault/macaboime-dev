@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { getCookie } from "../helpers/cookie_helper"
 
 export default class extends Controller {
   static targets = ["stadium", "mainContent", "button", "score"]
@@ -7,7 +8,7 @@ export default class extends Controller {
     this.checkScreenWidth()
     window.addEventListener('resize', this.checkScreenWidth.bind(this))
 
-    if (this.getCookie('always_show_stadium') === 'true') {
+    if (getCookie('always_show_stadium') === 'true') {
       this.expand()
     }
   }
@@ -72,11 +73,5 @@ export default class extends Controller {
     // if (this.isNarrowScreen && this.hasScoreTarget) {
     //   this.scoreTarget.classList.remove('hidden')
     // }
-  }
-
-  getCookie(name) {
-    const value = `; ${document.cookie}`
-    const parts = value.split(`; ${name}=`)
-    if (parts.length === 2) return parts.pop().split(';').shift()
   }
 }
