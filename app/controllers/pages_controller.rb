@@ -2,9 +2,7 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:home, :season_show]
   before_action :datas_for_season, only: [:home, :season_show]
 
-  def home
-    @teams = Team.all
-  end
+  def home; end
 
   def power
     redirect_to enter_results_path if current_user.referee?
