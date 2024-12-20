@@ -8,7 +8,7 @@
       </div>
       
       <div class="modal-body">
-        <%= form_tag(update_preferences_path, method: :post, remote: true, id: 'preferences-form', data: { "preferences-target": 'form' }) do %>
+        <%= form_tag(update_preferences_path, method: :post, remote: true, id: 'preferences-form', data: { "preferences-target": 'form', type: "json" }) do %>
           <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
           <div class="mb-3">
             <label for="favorite_team" class="form-label">Votre équipe favorite</label>

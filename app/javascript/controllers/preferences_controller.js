@@ -17,13 +17,18 @@ export default class extends Controller {
   submit(event) {
     event.preventDefault()
     console.log("Submit options form")
+    // Récupérer le token CSRF
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
     
     fetch(this.formTarget.action, {
       method: 'POST',
-      body: new FormData(this.formTarget),
+      body: JSON.stringify(Object.fromEntries(new FormData(this.formTarget))),
       headers: {
-        'X-Requested-With': 'XMLHttpRequest'
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`
       }
+      // credentials: 'same-origin'  // Pour inclure les cookies
     })
     .then(response => response.json())
     .then(data => {
@@ -31,5 +36,6 @@ export default class extends Controller {
         this.closeModalTarget.click();
       }
     })
+    .catch(error => console.error('Error:', error))
   }
 }
