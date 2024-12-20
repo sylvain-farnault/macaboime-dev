@@ -3,15 +3,25 @@ import { Modal } from 'bootstrap'
 import { getCookie } from "../helpers/cookie_helper"
 
 export default class extends Controller {
-  static targets = ["form", "closeModal"]
+  static targets = ["form", "closeModal", "showStadiumYes", "showStadiumNo"]
 
   connect() {
     this.modal = new Modal(this.element)
     console.log("Display preferences modal")
-    console.log("getCookie('cookie_agreement') : ", getCookie('cookie_agreement'))
+    console.log("getCookie('cookie_agreement') : ", getCookie('cookie_agreement'), typeof(getCookie('cookie_agreement')))
     if (!getCookie('cookie_agreement')) {
       this.modal.show()
     }
+    const registeredShowStadium = getCookie('always_show_stadium');
+    if (registeredShowStadium === "true") {
+      this.showStadiumYesTarget.checked = true;
+    } else if (registeredShowStadium === "false") {
+      this.showStadiumNoTarget.checked = true;
+    } else {
+      this.showStadiumYesTarget.checked = false;
+      this.showStadiumNoTarget.checked = false;
+    }
+    console.log("Cookies: ",registeredFavoriteTeam, registeredShowStadium);
   }
 
   submit(event) {
