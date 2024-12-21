@@ -15,7 +15,9 @@
             <%= select_tag :favorite_team,
               options_from_collection_for_select(@teams, "id", "name"),
               class: 'form-select',
-              prompt: "Sélectionnez votre équipe" %>
+              prompt: "Sélectionnez votre équipe" ,
+              data: { "preferences-target": 'favoriteTeam' }
+            %>
           </div>
 
           <div class="mb-3">

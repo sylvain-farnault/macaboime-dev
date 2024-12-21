@@ -3,7 +3,7 @@ import { Modal } from 'bootstrap'
 import { getCookie } from "../helpers/cookie_helper"
 
 export default class extends Controller {
-  static targets = ["form", "closeModal", "showStadiumYes", "showStadiumNo"]
+  static targets = ["form", "closeModal", "showStadiumYes", "showStadiumNo", "favoriteTeam"]
 
   connect() {
     this.modal = new Modal(this.element)
@@ -12,6 +12,12 @@ export default class extends Controller {
     if (!getCookie('cookie_agreement')) {
       this.modal.show()
     }
+    // Persistence favorite_team preference
+    const registeredFavoriteTeam = getCookie('favorite_team');
+    this.favoriteTeamTarget.value = registeredFavoriteTeam;
+    // TODO: extract persistence in an updatePersistenceForm method...
+    // ...that could be called in connect and submit (or elsewhere!)
+
     const registeredShowStadium = getCookie('always_show_stadium');
     if (registeredShowStadium === "true") {
       this.showStadiumYesTarget.checked = true;
