@@ -36,7 +36,15 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Supprimer les cookies</button>
+            <button type="button" 
+                    class="btn btn-warning" 
+                    data-bs-dismiss="modal"
+                    data-preferences-target="refusalButton"
+                    data-action="click->preferences#cookiesRefusal" 
+                    data-refusal-url="<%= cookies_refusal_preferences_path %>"
+            >
+              Refuser les cookies
+            </button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             <%= submit_tag "Enregistrer", class: "btn btn-primary", data: { action: "click->preferences#submit" } %>
           </div>

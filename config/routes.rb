@@ -30,4 +30,5 @@ Rails.application.routes.draw do
 
   # Path related to registering preferences in client browser cookies
   post 'update_preferences', to: 'preferences#update'
+  post 'cookies_refusal_preferences', to: 'preferences#cookies_refusal'
 end

@@ -1,5 +1,5 @@
 class PreferencesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:update] 
+  skip_before_action :authenticate_user!, only: [:update, :cookies_refusal] 
 
   def update
     cookies[:__Secure_necessary_cookies_agreement] = {
@@ -13,6 +13,23 @@ class PreferencesController < ApplicationController
     cookies.permanent[:favorite_team] = params[:favorite_team]
     cookies.permanent[:always_show_stadium] = params[:always_show_stadium]
 		
+    respond_to do |format|
+      format.json { render json: { success: true } }
+    end
+  end
+
+  def cookies_refusal
+    cookies[:__Secure_necessary_cookies_agreement] = {
+      value: false,
+      expires: 1.year.from_now,
+      same_site: :strict,
+      secure: true,
+      httponly: false,
+      essential: true
+    }
+    cookies.delete(:favorite_team)
+    cookies.delete(:always_show_stadium)
+
     respond_to do |format|
       format.json { render json: { success: true } }
     end

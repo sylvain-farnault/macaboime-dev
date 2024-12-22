@@ -3,7 +3,7 @@ import { Modal } from 'bootstrap'
 import { getCookie } from "../helpers/cookie_helper"
 
 export default class extends Controller {
-  static targets = ["form", "closeModal", "showStadiumYes", "showStadiumNo", "favoriteTeam"]
+  static targets = ["form", "closeModal", "showStadiumYes", "showStadiumNo", "favoriteTeam", "refusalButton"]
   token = null;
 
   connect() {
@@ -43,8 +43,30 @@ export default class extends Controller {
       body: JSON.stringify(Object.fromEntries(new FormData(this.formTarget))),
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': `Bearer ${token}`,
-        "Authorization": `Bearer ${token}`
+        'X-CSRF-Token': `Bearer ${this.token}`,
+        "Authorization": `Bearer ${this.token}`
+      }
+      // credentials: 'same-origin'  // Pour inclure les cookies
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        this.closeModalTarget.click();
+      }
+    })
+    .catch(error => console.error('Error:', error))
+  }
+
+  cookiesRefusal() {
+    // Set __Secure_necessary_cookies_agreement to false
+    // Delete always_show_stadium and
+    fetch(this.refusalButtonTarget.dataset.refusalUrl, {
+      method: 'POST',
+      body: JSON.stringify(Object.fromEntries(new FormData(this.formTarget))),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': `Bearer ${this.token}`,
+        "Authorization": `Bearer ${this.token}`
       }
       // credentials: 'same-origin'  // Pour inclure les cookies
     })
