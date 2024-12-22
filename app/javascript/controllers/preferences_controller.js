@@ -4,11 +4,15 @@ import { getCookie } from "../helpers/cookie_helper"
 
 export default class extends Controller {
   static targets = ["form", "closeModal", "showStadiumYes", "showStadiumNo", "favoriteTeam"]
+  token = null;
 
   connect() {
     this.modal = new Modal(this.element)
     console.log("Display preferences modal")
     console.log("getCookie('__Secure_necessary_cookies_agreement') :", getCookie('__Secure_necessary_cookies_agreement'), typeof(getCookie('__Secure_necessary_cookies_agreement')))
+    
+    this.token = this.setToken();
+
     if (!getCookie('__Secure_necessary_cookies_agreement')) {
       this.modal.show()
     }
@@ -33,8 +37,6 @@ export default class extends Controller {
   submit(event) {
     event.preventDefault()
     console.log("Submit options form")
-    // Récupérer le token CSRF
-    const token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
     
     fetch(this.formTarget.action, {
       method: 'POST',
@@ -53,5 +55,10 @@ export default class extends Controller {
       }
     })
     .catch(error => console.error('Error:', error))
+  }
+
+  setToken() {
+    // Récupérer le token CSRF dans le DOM
+    return document.querySelector('meta[name="csrf-token"]').getAttribute("content");
   }
 }
