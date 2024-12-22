@@ -8,8 +8,8 @@ export default class extends Controller {
   connect() {
     this.modal = new Modal(this.element)
     console.log("Display preferences modal")
-    console.log("getCookie('cookie_agreement') : ", getCookie('cookie_agreement'), typeof(getCookie('cookie_agreement')))
-    if (!getCookie('cookie_agreement')) {
+    console.log("getCookie('__Secure_necessary_cookies_agreement') :", getCookie('__Secure_necessary_cookies_agreement'), typeof(getCookie('__Secure_necessary_cookies_agreement')))
+    if (!getCookie('__Secure_necessary_cookies_agreement')) {
       this.modal.show()
     }
     // Persistence favorite_team preference
