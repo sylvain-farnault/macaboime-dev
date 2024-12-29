@@ -2,11 +2,12 @@ class PreferencesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:update, :cookies_refusal] 
 
   def update
-    cookies[:__Secure_necessary_cookies_agreement] = {
+    # TODO: HTTPS / secure: true / __Secure_necessary_cookies_agreement
+    cookies[:necessary_cookies_agreement] = {
       value: true,
       expires: 1.year.from_now,
       same_site: :strict,
-      secure: true,
+      secure: false,
       httponly: false,
       essential: true
     }
@@ -19,11 +20,11 @@ class PreferencesController < ApplicationController
   end
 
   def cookies_refusal
-    cookies[:__Secure_necessary_cookies_agreement] = {
+    cookies[:necessary_cookies_agreement] = {
       value: false,
       expires: 1.year.from_now,
       same_site: :strict,
-      secure: true,
+      secure: false,
       httponly: false,
       essential: true
     }
