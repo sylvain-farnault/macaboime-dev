@@ -1,0 +1,93 @@
+<div class="modal fade" id="modalOptions" tabindex="-1" aria-labelledby="modalOptionsLabel" aria-hidden="true" data-controller="preferences">
+  <div class="modal-dialog modal-dialog-centered modal-fullwidth-lg-down">
+    <div class="modal-content bg-dark text-light border-0">
+      <!-- Header avec dégradé -->
+      <div class="modal-header border-bottom-0 bg-gradient" style="background: linear-gradient(45deg, #1a237e, #0288d1)">
+        <h5 class="modal-title d-flex align-items-center" id="modalOptionsLabel">
+          <%= fa_icon("cog", class: "me-2") %> Vos préférences
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" data-preferences-target="closeModal"></button>
+      </div>
+
+      <div class="modal-body p-4">
+        <%= form_tag(update_preferences_path, method: :post, remote: true, id: 'preferences-form', 
+            data: { "preferences-target": 'form', type: "json" }) do %>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          
+          <!-- Favorite Team Section -->
+          <div class="p-3 mb-3 rounded-3 bg-light bg-opacity-10">
+            <label for="favorite_team" class="form-label mb-3">
+              <div class="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-25 text-warning rounded-circle" style="width: 36px; height: 36px;">
+                <%= fa_icon("star") %>
+              </div>
+              <span class="fw-bold">Votre équipe favorite</span>
+            </label>
+            <div class="input-group">
+              <%= select_tag :favorite_team,
+                options_from_collection_for_select(@teams, "id", "name"),
+                class: 'form-select bg-dark text-light border-secondary',
+                prompt: "Sélectionnez votre équipe",
+                data: { "preferences-target": 'favoriteTeam' }
+              %>
+            </div>
+          </div>
+
+          <!-- Stadium Display Section -->
+          <div class="p-3 mb-3 rounded-3 bg-light bg-opacity-10">
+            <label class="form-label d-block mb-3">
+              <div class="d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-25 text-danger rounded-circle" style="width: 36px; height: 36px;">
+                <%= fa_icon("map-marker") %>
+              </div>
+              <span class="fw-bold">Toujours afficher les stades</span>
+            </label>
+            <div class="btn-group d-flex" role="group" aria-label="Choix d'affichage des stades">
+              <input type="radio" class="btn-check" name="always_show_stadium" 
+                     id="show_stadium_yes" value="true" 
+                     data-preferences-target="showStadiumYes">
+              <label class="btn btn-outline-success border-2 w-50 py-2" for="show_stadium_yes">
+                <%= fa_icon("check", class: "me-2") %>Oui
+              </label>
+              
+              <input type="radio" class="btn-check" name="always_show_stadium" 
+                     id="show_stadium_no" value="false" 
+                     data-preferences-target="showStadiumNo">
+              <label class="btn btn-outline-danger border-2 w-50 py-2" for="show_stadium_no">
+                <%= fa_icon("times", class: "me-2") %>Non
+              </label>
+            </div>
+          </div>
+
+          <!-- Cookie Notice dans sa propre section -->
+          <div class="p-3 mb-3 rounded-3 bg-light bg-opacity-10">
+            <div class="d-block align-items-center mb-3">
+              <div class="d-inline-flex align-items-center justify-content-center bg-info bg-opacity-25 text-info rounded-circle" style="width: 36px; height: 36px;">
+                <%= fa_icon("info-circle") %>
+              </div>
+              <small>En validant, vous acceptez l'utilisation de cookies pour enregistrer vos préférences.</small>
+            </div>
+          </div>
+
+          <!-- Footer Buttons -->
+          <div class="d-flex flex-column flex-md-row justify-content-end gap-2 pt-3">
+            <button type="button" 
+                    class="btn btn-outline-warning border-2"
+                    data-bs-dismiss="modal"
+                    data-preferences-target="refusalButton"
+                    data-action="click->preferences#cookiesRefusal" 
+                    data-refusal-url="<%= cookies_refusal_preferences_path %>">
+              <%= fa_icon("ban", class: "me-2") %>Refuser
+            </button>
+            <button type="button" class="btn btn-outline-light border-2" data-bs-dismiss="modal">
+              <%= fa_icon("times", class: "me-2") %>Annuler
+            </button>
+            <%= button_tag type: 'submit', class: "btn btn-primary border-0", 
+                style: "background: linear-gradient(45deg, #1a237e, #0288d1)",
+                data: { action: "click->preferences#submit" } do %>
+              <%= fa_icon("save", class: "me-2") %>Enregistrer
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

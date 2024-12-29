@@ -1,14 +1,38 @@
 import { Controller } from "@hotwired/stimulus"
+import { getCookie } from "../helpers/cookie_helper"
 
 export default class extends Controller {
-  static targets = ["stadium", "mainContent", "button", "score"]
+  static targets = ["stadium", "mainContent", "button", "score", "team"]
 
   connect() {
+    //console.log("games stimulus Connect")
     this.checkScreenWidth()
     window.addEventListener('resize', this.checkScreenWidth.bind(this))
+
+    if (getCookie('always_show_stadium') === 'true') {
+      this.expand()
+    } else {
+      this.collapse()
+    }
+  }
+
+  reconnect() {
+    //console.log("games stimulus ReConnect")
+  }
+
+  teamTargetConnected(element) {
+    // as games controller connect each team style update regarding to registeredFavoriteTeam cookie
+    const registeredFavoriteTeam = getCookie('favorite_team');
+
+    if (element.dataset.teamId == registeredFavoriteTeam) {
+      element.classList.add("favorite-team");
+    } else {
+      element.classList.remove("favorite-team");
+    }
   }
 
   disconnect() {
+    //console.log("games stimulus DisConnect")
     window.removeEventListener('resize', this.checkScreenWidth.bind(this))
   }
 
