@@ -8,11 +8,11 @@ export default class extends Controller {
 
   connect() {
     this.modal = new Modal(this.element)
-    // console.log("getCookie('__Secure_necessary_cookies_agreement') :", getCookie('__Secure_necessary_cookies_agreement'), typeof(getCookie('__Secure_necessary_cookies_agreement')))
+    // console.log("getCookie('necessary_cookies_agreement') :", getCookie('necessary_cookies_agreement'), typeof(getCookie('necessary_cookies_agreement')))
     
     this.token = this.setToken();
 
-    if (!getCookie('__Secure_necessary_cookies_agreement')) {
+    if (!getCookie('necessary_cookies_agreement')) {
       this.modal.show()
     }
     // Persistence favorite_team preference
@@ -60,8 +60,8 @@ export default class extends Controller {
   }
 
   cookiesRefusal() {
-    // Set __Secure_necessary_cookies_agreement to false
-    // Delete always_show_stadium and
+    // Set necessary_cookies_agreement to false
+    // Delete always_show_stadium and favorite_team
     fetch(this.refusalButtonTarget.dataset.refusalUrl, {
       method: 'POST',
       body: JSON.stringify(Object.fromEntries(new FormData(this.formTarget))),
