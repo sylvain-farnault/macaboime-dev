@@ -8,8 +8,7 @@ export default class extends Controller {
 
   connect() {
     this.modal = new Modal(this.element)
-    console.log("Display preferences modal")
-    console.log("getCookie('__Secure_necessary_cookies_agreement') :", getCookie('__Secure_necessary_cookies_agreement'), typeof(getCookie('__Secure_necessary_cookies_agreement')))
+    // console.log("getCookie('__Secure_necessary_cookies_agreement') :", getCookie('__Secure_necessary_cookies_agreement'), typeof(getCookie('__Secure_necessary_cookies_agreement')))
     
     this.token = this.setToken();
 
@@ -51,7 +50,10 @@ export default class extends Controller {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
+        document.body.focus();
         this.closeModalTarget.click();
+        this.reconnectController("ranking-team-line");
+        this.reconnectController("games");
       }
     })
     .catch(error => console.error('Error:', error))
@@ -82,5 +84,27 @@ export default class extends Controller {
   setToken() {
     // Récupérer le token CSRF dans le DOM
     return document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+  }
+
+  async reconnectController(controllerName) {
+    // Disconnect with removeAttribute (we wait it's done before reconnect )
+    // Reconnect with setAttribute
+    const teamLines = document.querySelectorAll(`[data-controller='${controllerName}']`);
+    
+    const removeAndSetAttribute = async (element) => {
+      return new Promise((resolve) => {
+        element.removeAttribute('data-controller');
+        // we wait for DOM update
+        requestAnimationFrame(() => {
+          element.setAttribute('data-controller', controllerName);
+          resolve();
+        });
+      });
+    };
+  
+    // TeamLines treatment as a sequence
+    for (const teamLine of teamLines) {
+      await removeAndSetAttribute(teamLine);
+    }
   }
 }

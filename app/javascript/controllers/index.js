@@ -9,3 +9,6 @@ application.register("preferences", PreferencesController)
 
 import GamesController from "./games_controller"
 application.register("games", GamesController)
+
+import RankingTeamLineController from "./ranking_team_line_controller"
+application.register("ranking-team-line", RankingTeamLineController)

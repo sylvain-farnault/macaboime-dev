@@ -31,7 +31,7 @@
       <!-- Barre principale -->
       <div data-games-target="mainContent" class="match-bar">
         <div class="team team-left">
-          <span class="team-name-full"><%= game.results.first.team.team_names.last.name %></span>
+          <span class="team-name-full" data-games-target="team" data-team-id="<%= game.results.first.team.id %>"><%= game.results.first.team.team_names.last.name %></span>
           <span class="team-name-short"><%= game.results.first.team.team_names.last.name.first(5).upcase %></span>
           <%= fa_icon("flag", class: "forfeit-flag", title: "Forfait") if game.results.first.forfeit %>
         </div>
@@ -56,7 +56,7 @@
 
         <div class="team team-right">
           <%= fa_icon("flag", class: "forfeit-flag", title: "Forfait") if game.results.last.forfeit %>
-          <span class="team-name-full"><%= game.results.last.team.team_names.last.name %></span>
+          <span class="team-name-full" data-games-target="team" data-team-id="<%= game.results.last.team.id %>"><%= game.results.last.team.team_names.last.name %></span>
           <span class="team-name-short"><%= game.results.last.team.team_names.last.name.first(4).upcase %></span>
         </div>
 

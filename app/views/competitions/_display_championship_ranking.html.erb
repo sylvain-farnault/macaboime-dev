@@ -13,7 +13,7 @@
   </tr>
   <% rank = 1 %>
   <% @ranking_datas.each do |id, team| %>
-    <tr>
+    <tr data-controller="ranking-team-line" data-team-id="<%= team[:id] %>"%>
       <td class="rank"><%= "#{rank}. " %></td>
       <td class="bolder"><%= team[:name] %></td>
       <td class="bolder"><%= team[:points] %></td>
