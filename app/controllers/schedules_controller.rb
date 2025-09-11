@@ -33,7 +33,7 @@ class SchedulesController < ApplicationController
       if @schedule.save
         i += 1
         # then create next ones (date + 7 days) btw 2 schedules
-        while i <= ((@edition.teams.count - 1) * 2)
+        while i <= ((@edition.teams.count - 1 + (@edition.teams.count % 2)) * 2)
           # create new schedule 7 days later
           Schedule.create(
             edition: @edition,
@@ -51,23 +51,27 @@ class SchedulesController < ApplicationController
     @edition = Edition.find(params[:edition_id])
 
     # Generate a RoundRobin for @edition.teams
-    first_legs_games = RoundRobinTournament.schedule(@edition.teams.shuffle).shuffle
+    first_legs_games = RoundRobinTournament.schedule(@edition.teams.shuffle)
 
     schedule = @edition.schedules.order(:created_at).first
     first_legs_games.each do |day|
       day.each do |game|
-        new_game = Game.create(schedule: schedule)
-        Result.create(game: new_game, team: game.first)
-        Result.create(game: new_game, team: game.last)
+        if game.compact.count == 2
+          new_game = Game.create(schedule: schedule)
+          Result.create(game: new_game, team: game.first)
+          Result.create(game: new_game, team: game.last)
+        end
       end
       schedule = schedule.next
     end
-    second_legs_games = first_legs_games.rotate(@edition.second_legs_offset)
+    second_legs_games = first_legs_games.shuffle
     second_legs_games.each do |day|
       day.each do |game|
-        new_game = Game.create(schedule: schedule)
-        Result.create(game: new_game, team: game.last)
-        Result.create(game: new_game, team: game.first)
+        if game.compact.count == 2
+          new_game = Game.create(schedule: schedule)
+          Result.create(game: new_game, team: game.last)
+          Result.create(game: new_game, team: game.first)
+        end
       end
       schedule = schedule.next
     end
