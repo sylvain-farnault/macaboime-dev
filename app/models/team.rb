@@ -11,6 +11,6 @@ class Team < ApplicationRecord
   end
 
   def name
-    label_name
+    label_name if persisted?
   end
 end
