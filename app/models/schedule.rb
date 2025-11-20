@@ -1,4 +1,6 @@
 class Schedule < ApplicationRecord
+  default_scope { order(day: :asc) }
+
   # attr_accessor :first_day
   belongs_to :edition
   has_many :games, dependent: :destroy
@@ -9,22 +11,22 @@ class Schedule < ApplicationRecord
 
 
   def next
-    next_schedule = self.class.where("id > ?", id).first
+    next_schedule = self.class.where("day > ?", self.class.find(id).day).first
     self.edition == next_schedule&.edition ? next_schedule : nil
   end
 
   def next_in_season
-    next_schedule = self.class.where("id > ?", id).first
+    next_schedule = self.class.where("day > ?", self.class.find(id).day).first
     self.season == next_schedule&.season ? next_schedule : nil
   end
 
   def previous
-    previous_schedule = self.class.where("id < ?", id).last
+    previous_schedule = self.class.where("day < ?", self.class.find(id).day).last
     self.edition == previous_schedule&.edition ? previous_schedule : nil
   end
 
   def previous_in_season
-    previous_schedule = self.class.where("id < ?", id).last
+    previous_schedule = self.class.where("day < ?", self.class.find(id).day).last
     self.season == previous_schedule&.season ? previous_schedule : nil
   end
 
