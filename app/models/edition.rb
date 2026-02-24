@@ -6,7 +6,8 @@ class Edition < ApplicationRecord
   has_many :schedules
   has_many :articles
 
-  validates :competition_id, uniqueness: { scope: :season_id }
+  validates :designation, presence: true
+  validates :competition_id, uniqueness: { scope: [:season_id, :designation] }
 
   def label_for_select
     "#{self.season.years}/#{self.competition.kind}/#{self.competition.name}"

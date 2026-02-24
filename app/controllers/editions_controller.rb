@@ -16,9 +16,22 @@ class EditionsController < ApplicationController
     @edition = Edition.find(params[:id])
   end
 
+  def edit
+    @edition = Edition.find(params[:id])
+  end
+
+  def update
+    @edition = Edition.find(params[:id])
+    if @edition.update(edition_params)
+      redirect_to editions_path
+    else
+      render :edit
+    end
+  end
+
   private
 
   def edition_params
-    params.require(:edition).permit(:season_id, :competition_id)
+    params.require(:edition).permit(:season_id, :competition_id, :designation, :second_leg)
   end
 end

@@ -33,7 +33,7 @@ class SchedulesController < ApplicationController
       if @schedule.save
         i += 1
         # then create next ones (date + 7 days) btw 2 schedules
-        while i <= ((@edition.teams.count - 1 + (@edition.teams.count % 2)) * 2)
+        while i <= ((@edition.teams.count - 1 + (@edition.teams.count % 2)) * (@edition.second_leg? ? 2 : 1))
           # create new schedule 7 days later
           Schedule.create(
             edition: @edition,
@@ -64,16 +64,18 @@ class SchedulesController < ApplicationController
       end
       schedule = schedule.next
     end
-    second_legs_games = first_legs_games.shuffle
-    second_legs_games.each do |day|
-      day.each do |game|
-        if game.compact.count == 2
-          new_game = Game.create(schedule: schedule)
-          Result.create(game: new_game, team: game.last)
-          Result.create(game: new_game, team: game.first)
+    if @edition.second_leg?
+      second_legs_games = first_legs_games.shuffle
+      second_legs_games.each do |day|
+        day.each do |game|
+          if game.compact.count == 2
+            new_game = Game.create(schedule: schedule)
+            Result.create(game: new_game, team: game.last)
+            Result.create(game: new_game, team: game.first)
+          end
         end
+        schedule = schedule.next
       end
-      schedule = schedule.next
     end
 
   end
