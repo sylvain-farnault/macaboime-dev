@@ -18,14 +18,12 @@ class PagesController < ApplicationController
     # See later the possibility to get season_years into path macaboime.fr/2020-2021
 
     season_years = params[:season_years] || SeasonsHelper::CurrentSeasonYears.get
-    season = Season.find_by(years: season_years)
+    @season = Season.find_by(years: season_years)
     competition = Competition.where(kind: "championship")
-    @edition = Edition.find_by(season: season, competition: competition)
-    @articles = season.articles.order(id: :desc) if season
-
-    @ranking_datas = Competitions::Championship.new(edition: @edition).ranking_datas
+    @editions = Edition.where(season: @season, competition: competition)
+    @articles = @season.articles.order(id: :desc) if @season
 
     # select all schedules (all competition kinds) from the same season of that @schedule
-    @season_schedules = Schedule.where(edition_id: Edition.where(season: @edition.season)).order(:id) if @edition
+    @season_schedules = Schedule.where(edition_id: Edition.where(season: @season)).order(:id) if @editions.present?
   end
 end

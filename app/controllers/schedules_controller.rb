@@ -28,17 +28,20 @@ class SchedulesController < ApplicationController
     # if first day schedule (send through form) is in the futur
     if (@schedule.day > current_date)
       # then save 1st schedule
-      @schedule.designation = "J" + sprintf("%02d",i)
+      @schedule.designation = (@edition.letter || "J") + sprintf("%02d",i)
       @schedule.edition = @edition
       if @schedule.save
+        previous_schedule = @schedule
         i += 1
         # then create next ones (date + 7 days) btw 2 schedules
-        while i <= ((@edition.teams.count - 1 + (@edition.teams.count % 2)) * 2)
+        while i <= ((@edition.teams.count - 1 + (@edition.teams.count % 2)) * (@edition.second_leg? ? 2 : 1))
           # create new schedule 7 days later
-          Schedule.create(
+          new_schedule = Schedule.create(
             edition: @edition,
-            day: Schedule.all.last.day + 7,
-            designation: "J" + sprintf("%02d",i))
+            day: previous_schedule.day + 7,
+            designation: (@edition.letter || "J") + sprintf("%02d",i)
+          )
+          previous_schedule = new_schedule
           # increment round number
           i += 1
         end
@@ -62,18 +65,21 @@ class SchedulesController < ApplicationController
           Result.create(game: new_game, team: game.last)
         end
       end
-      schedule = schedule.next
+      schedule = schedule.next_in_edition
     end
-    second_legs_games = first_legs_games.shuffle
-    second_legs_games.each do |day|
-      day.each do |game|
-        if game.compact.count == 2
-          new_game = Game.create(schedule: schedule)
-          Result.create(game: new_game, team: game.last)
-          Result.create(game: new_game, team: game.first)
+    
+    if @edition.second_leg?
+      second_legs_games = first_legs_games.shuffle
+      second_legs_games.each do |day|
+        day.each do |game|
+          if game.compact.count == 2
+            new_game = Game.create(schedule: schedule)
+            Result.create(game: new_game, team: game.last)
+            Result.create(game: new_game, team: game.first)
+          end
         end
+        schedule = schedule.next_in_edition
       end
-      schedule = schedule.next
     end
 
   end

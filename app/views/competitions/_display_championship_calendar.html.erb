@@ -2,7 +2,7 @@
 
 <% edition.schedules.limit(3).each do |schedule| %>
     <div class="schedule-designation">
-      <%= "Journée " + schedule.designation.split("J")[1] %>
+      <%= "Journée " + schedule.designation %>
       <div class="info">
         <%= schedule.day.strftime("%d/%m/%Y") %>
       </div>

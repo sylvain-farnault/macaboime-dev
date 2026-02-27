@@ -1,7 +1,7 @@
 <table class="ranking">
   <tr>
     <th></th>
-    <th></th>
+    <th><%= edition.designation %></th>
     <th>Pts</th>
     <th>J</th>
     <th>G</th>
@@ -12,7 +12,7 @@
     <th>c.</th>
   </tr>
   <% rank = 1 %>
-  <% @ranking_datas.each do |id, team| %>
+  <% edition.computed_ranking_datas.each do |id, team| %>
     <tr data-controller="ranking-team-line" data-team-id="<%= team[:id] %>"%>
       <td class="rank"><%= "#{rank}. " %></td>
       <td class="bolder"><%= team[:name] %></td>

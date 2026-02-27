@@ -1,6 +1,6 @@
 <div class="top-page">
   <h3>
-    Saison <%= @edition.season.years %>
+    Saison <%= @editions.first.season.years %>
   </h3>
 </div>
 <hr>
@@ -34,6 +34,6 @@
 </div>
 
 <!-- Display championship ranking -->
-<%= render "competitions/display_championship_ranking", edition: @edition %>
+<%= render partial: "competitions/display_championship_ranking", collection: @editions, as: :edition %>
 
 <br>

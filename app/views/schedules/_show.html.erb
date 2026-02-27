@@ -5,7 +5,7 @@
   <% end %>
   <div class="schedule-designation">
     <% if schedule.edition.competition.kind == "championship" %>
-      <%= "Journée " + schedule.designation.split("J")[1] %>
+      <%= "Journée " + schedule.designation %>
     <% elsif schedule.edition.competition.kind == "cup" %>
       <%= "Cup " + schedule.designation %>
     <% else %>

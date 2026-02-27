@@ -1,4 +1,4 @@
-<h1>Contestants for <%= @edition.competition.name + "/" + @edition.season.years %></h1>
+<h1>Contestants for <%= @edition.competition.name + "/" + @edition.season.years + "/" + @edition.designation %></h1>
 <%= simple_form_for [@edition, @new_contestant] do |f| %>
   <%= f.association :team, value_method: :id, label_method: :label_name %>
   <%= f.button :submit %>
