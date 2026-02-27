@@ -11,22 +11,27 @@ class Schedule < ApplicationRecord
 
 
   def next
-    next_schedule = self.class.where("day > ?", self.class.find(id).day).first
+    next_schedule = self.class.where("day > ?", self.day).first
     self.edition == next_schedule&.edition ? next_schedule : nil
   end
 
   def next_in_season
-    next_schedule = self.class.where("day > ?", self.class.find(id).day).first
+    next_schedule = self.class.where("day >= ? AND created_at > ?", self.day, self.created_at).order(:day).first
+    self.season == next_schedule&.season ? next_schedule : nil
+  end
+
+  def next_in_edition
+    next_schedule = self.class.where("day > ? AND edition_id = ?", self.day, self.edition_id).order(:day).first
     self.season == next_schedule&.season ? next_schedule : nil
   end
 
   def previous
-    previous_schedule = self.class.where("day < ?", self.class.find(id).day).last
+    previous_schedule = self.class.where("day < ?", self.day).last
     self.edition == previous_schedule&.edition ? previous_schedule : nil
   end
 
   def previous_in_season
-    previous_schedule = self.class.where("day < ?", self.class.find(id).day).last
+    previous_schedule = self.class.where("day <= ? AND created_at < ?", self.day, self.created_at).order(:day).last
     self.season == previous_schedule&.season ? previous_schedule : nil
   end
 

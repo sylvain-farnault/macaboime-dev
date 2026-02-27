@@ -53,6 +53,7 @@ module Competitions
         }
       }
 
+      # TODO : I think sort_by render an array ! I need to keep full Hash to use fully Raking.data as Hash !! 
       ranking_datas.sort_by { |k,v| [-v[:points], -v[:goals_diff], -v[:goals_for]] }
     end
 

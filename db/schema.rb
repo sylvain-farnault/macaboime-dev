@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_04_094227) do
+ActiveRecord::Schema.define(version: 2026_02_26_223713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,9 @@ ActiveRecord::Schema.define(version: 2022_12_04_094227) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "second_legs_offset", default: 2
     t.integer "total_rounds"
+    t.boolean "second_leg", default: true
+    t.string "designation", default: "empty", null: false
+    t.string "letter"
     t.index ["competition_id"], name: "index_editions_on_competition_id"
     t.index ["season_id"], name: "index_editions_on_season_id"
   end
@@ -98,6 +101,15 @@ ActiveRecord::Schema.define(version: 2022_12_04_094227) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["schedule_id"], name: "index_games_on_schedule_id"
     t.index ["stadium_id"], name: "index_games_on_stadium_id"
+  end
+
+  create_table "rankings", force: :cascade do |t|
+    t.json "data"
+    t.bigint "edition_id", null: false
+    t.boolean "initial", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["edition_id"], name: "index_rankings_on_edition_id"
   end
 
   create_table "results", force: :cascade do |t|
@@ -190,6 +202,7 @@ ActiveRecord::Schema.define(version: 2022_12_04_094227) do
   add_foreign_key "editions", "seasons"
   add_foreign_key "games", "schedules"
   add_foreign_key "games", "stadiums"
+  add_foreign_key "rankings", "editions"
   add_foreign_key "results", "games"
   add_foreign_key "results", "teams"
   add_foreign_key "schedules", "editions"

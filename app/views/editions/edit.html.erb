@@ -3,6 +3,7 @@
   <%= f.association :season, value_method: :id, label_method: :years %>
   <%= f.association :competition, value_method: :id, label_method: :name %>
   <%= f.input :designation %>
+	<%= f.input :letter %>
   <%= f.input :second_leg %>
   <%= f.button :submit, class: "btn btn-warning" %>
 <% end -%>

@@ -32,6 +32,6 @@ class EditionsController < ApplicationController
   private
 
   def edition_params
-    params.require(:edition).permit(:season_id, :competition_id, :designation, :second_leg)
+    params.require(:edition).permit(:season_id, :competition_id, :designation, :letter, :second_leg)
   end
 end
