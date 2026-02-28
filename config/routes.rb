@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     get "results(/:id)", to: "results#enter_results", as: "enter_results"
     resources :articles
     resources :user_roles, only: [:index, :create, :destroy]
+    resources :editions do
+      post 'rankings/create_initial'
+    end
   end
 
   # Path related to registering preferences in client browser cookies

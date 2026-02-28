@@ -14,6 +14,19 @@
     <li>
       <%= link_to "#{edition.designation}: (#{edition.season.id})" + edition.season.years + "/ (#{edition.competition.id})" + edition.competition.name, edition_path(edition) %>
       <%= link_to "Edit", edit_edition_path(edition) %>
+      <!-- Exemple dans app/views/editions/show.html.erb -->
+      <%= link_to "#",
+            class: "btn btn-secondary",
+            data: {
+              bs_toggle: "modal",
+              bs_target: "#chooseInitialForEditionModal_#{edition.id}"
+            } do %>
+        Ajouter Initial
+      <% end %>
+
+      <!-- Inclusion du partial pour la pop-up -->
+      <%= render 'rankings/choose_initial_for_edition', edition: edition %>
+
     </li>
   <% end %>
 </ul>
