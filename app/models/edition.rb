@@ -24,7 +24,10 @@ class Edition < ApplicationRecord
 
   def computed_ranking_datas
     # TODO : ranking_data should compute last ranking data and last ranking_initial data
-    # ranking_datas = @edition.rankings.any? ? @edition.ranking.data : Competitions::Championship.new(edition: @edition).ranking_datas
-    Competitions::Championship.new(edition: self).ranking_datas
+    
+    persisted_rankings = rankings
+    persisted_rankings.any? ?
+      persisted_rankings.last.data.deep_symbolize_keys :
+      Competitions::Championship.new(edition: self).ranking_datas
   end
 end

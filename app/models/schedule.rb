@@ -8,6 +8,7 @@ class Schedule < ApplicationRecord
   # after_update :delay_all_season_schedules_day
 
   accepts_nested_attributes_for :games
+  after_update :check_results_update
 
 
   def next
@@ -94,6 +95,22 @@ class Schedule < ApplicationRecord
         schedule_iterator.update(day: schedule_iterator.day + 7)
       end
     end
+  end
+
+  def check_results_update
+    Rails.logger.info "######## check_results_update"
+    if games.flat_map(&:results).any?{|r| r.saved_change_to_attribute?(:mark) }
+      Rails.logger.info "######## Un ou plusieurs Result#mark ont été mis à jour pour le Schedule id:#{id}"
+      save_new_ranking_data
+    end
+  end
+
+  def save_new_ranking_data
+    logger.info "$$$$$$$ save_new_ranking_data $$$$$$$$"
+
+    edition.rankings.create!(
+      data: Competitions::Championship.new(edition: edition).ranking_datas
+    )
   end
 
 end
