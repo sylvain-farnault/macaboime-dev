@@ -1,0 +1,32 @@
+<div class="modal fade" id="chooseInitialForEditionModal_<%= edition.id %>" tabindex="-1" aria-labelledby="chooseInitialForEditionModalLabel_<%= edition.id %>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chooseInitialForEditionModalLabel_<%= edition.id %>">
+          <%= edition.season.years %> | <%= edition.designation %>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Choisir un classement initial : </p>
+				<!-- Formulaire pour choisir une autre édition -->
+        <%= form_with(url: edition_rankings_create_initial_path(edition), method: :post, local: true) do |form| %>
+          <div class="mb-3">
+            <%= label_tag :target_edition_id, "Choisir une autre édition", class: "form-label" %>
+            <%= select_tag :target_edition_id,
+              options_from_collection_for_select(Edition.where.not(id: edition.id), :id, :designation),
+              prompt: "Sélectionnez une édition",
+              class: "form-select",
+              required: false %>
+          </div>
+          <div class="modal-footer">
+            <%= submit_tag "Valider", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

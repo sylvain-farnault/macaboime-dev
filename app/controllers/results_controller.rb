@@ -28,8 +28,8 @@ class ResultsController < ApplicationController
       @schedule = Schedule.find(params[:schedule_id])
       
       if @schedule.update(schedule_params)
-        # Vérifier si des results ont été modifiés
-        save_new_ranking_data
+        # Check if Results were updated in callback at SChedule model level after_update :check_results_update
+        # for ranking data saving if needed
         
         redirect_to enter_results_path(@schedule), notice: "Schedule #{@schedule.designation} has been updated!"
       else
@@ -67,15 +67,5 @@ class ResultsController < ApplicationController
               ]
             ]
           )
-  end
-
-  def save_new_ranking_data
-    logger.info "$$$$$$$ Handle result update $$$$$$$$"
-
-    # TODO TOCHECK : does result_changed? is enought to catch nested attributes ?
-    @schedule.edition.rankings.create!(
-      data: Competitions::Championship.new(edition: @schedule.edition).ranking_datas
-    )
-
   end
 end
