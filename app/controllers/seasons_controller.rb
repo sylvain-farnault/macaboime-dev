@@ -28,7 +28,9 @@ class SeasonsController < ApplicationController
     @season = Season.find_by_years(params[:id])
     @edition = @season.editions.find{|e| e.competition.kind == "championship"}
     @teams = @edition.teams
-    @schedules = @edition.schedules
+
+    # Wierd synthax following to keep ActiveRecord:Relation instead of array
+    @schedules = Schedule.where(id: @season.editions.flat_map(&:schedules).map(&:id))
   end
 
   private
