@@ -5,6 +5,7 @@
       name: team.label_name,
       stabi: 0,
       played: 0,
+      virebelle: 0,
       percent: 0,
       percent_sum_for_next_game: 0,
       resident_home_next_game: false
@@ -20,6 +21,11 @@
         # si terrain stabi + pas de forfait
         stats[game.results.first.team_id][:stabi] += 1
         stats[game.results.last.team_id][:stabi] += 1
+      end
+      if game.stadium.try(:name) == "Virebelle La Ciotat" && game.results.pluck(:forfeit).exclude?(true)
+        # si terrain virebelle + pas de forfait
+        stats[game.results.first.team_id][:virebelle] += 1
+        stats[game.results.last.team_id][:virebelle] += 1
       end
     end
   end
@@ -51,6 +57,7 @@
         <th></th>
         <th>Nb joués</th>
         <th>Nb stabi</th>
+        <th>Nb virebelle</th>
         <th class="table-active"><strong><u>% stabi</u></strong></th>
         <th>Somme % prochain adversaire</th>
       </tr>
@@ -61,6 +68,7 @@
         <td><%= data[:name] %></td>
         <td><%= data[:played] %></td>
         <td><%= data[:stabi] %></td>
+        <td><%= data[:virebelle] %></td>
         <td class="table-active text-warning"><strong><%= data[:percent] %></strong></td>
         <td class="<%= 'table-secondary' if data[:resident_home_next_game] %>">
           <%= data[:percent_sum_for_next_game] %><%= ' (chez résident)' if data[:resident_home_next_game] %>
