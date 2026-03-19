@@ -34,7 +34,7 @@
   }
   stats.each{ |team_id, data|
     next_schedule_games = @schedules.where("day < ?", Date.today).last.next_in_edition.try(:games)
-    if next_schedule_games
+    if next_schedule_games.present?
       next_game = next_schedule_games.find{|g| g.results.pluck(:team_id).include?(team_id)}
       next_opponent_id = next_game.results.where.not(team_id: team_id).first.team_id
       data[:percent_sum_for_next_game] = stats[next_opponent_id][:percent] + data[:percent]
