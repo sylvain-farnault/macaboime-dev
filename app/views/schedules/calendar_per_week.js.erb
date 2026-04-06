@@ -2,9 +2,9 @@
 
 console.log("Show schedule : Week Mode :)");
 
-<% if @desable_direction %>
+<% if @disable_direction %>
   // On désactive le lien ciblé
-  var targetLink = document.querySelector("a#search-direction-" + '<%= @desable_direction %>')
+  var targetLink = document.querySelector("a#search-direction-" + '<%= @disable_direction %>')
   if (targetLink) {
     targetLink.setAttribute("href", "#");
     targetLink.querySelector("i").style.color = 'grey';
