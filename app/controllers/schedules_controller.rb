@@ -24,7 +24,7 @@ class SchedulesController < ApplicationController
     season = week < 30 ? Season.find_by_years("#{year - 1}-#{year}"): Season.find_by_years("#{year}-#{year + 1}")
     schedules_day = season.editions.flat_map(&:schedules).pluck(:day)
     games_alternative_day = season.editions.flat_map(&:schedules).flat_map(&:games).pluck(:alternative_date).compact
-    range_date = ((schedules_day + games_alternative_day).sort).then {|array| (array.first.monday? ? array.first..array.last : array.first.prev_occurring(:monday))..array.last}
+    range_date = ((schedules_day + games_alternative_day).sort).then {|array| (array.first.monday? ? array.first : array.first.prev_occurring(:monday))..array.last}
     
     @displayed_date = Date.commercial(year, week, 1)
     loop do
@@ -38,7 +38,7 @@ class SchedulesController < ApplicationController
         if @displayed_date > range_date.max
 
           if params[:search_direction] == "futur"
-            @desable_direction = "futur"
+            @disable_direction = "futur"
             
             break
           end
@@ -47,7 +47,7 @@ class SchedulesController < ApplicationController
         elsif @displayed_date < range_date.min
 
           if params[:search_direction] == "past"
-            @desable_direction = "past"
+            @disable_direction = "past"
             
             break
           end
