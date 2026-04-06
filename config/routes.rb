@@ -3,7 +3,14 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
   get "saisons/:season_years", to: "pages#season_show", as: "season_show"
-  resources :schedules, only: [:show]
+  resources :schedules, only: [:show] do
+    collection do
+      get "calendar_per_week/:year/:week/:search_direction", 
+        to: "schedules#calendar_per_week", 
+        as: :calendar_per_week,
+        constraints: { search_direction: /past|futur/ }
+    end
+  end
 
   get "power", to: "pages#power"
   scope '/power' do

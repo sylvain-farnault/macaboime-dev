@@ -27,7 +27,7 @@ window.StimulusApplication = application
 console.log("Application Stimulus chargée");
 
 
-import { showSelectSchedule } from '../components/schedules'
+// import { showSelectSchedule } from '../components/schedules'
 import { markControlsHandler } from '../components/mark_controls_handler'
 import { forfeitBtnHandler } from '../components/forfeit_btn_handler'
 
@@ -73,18 +73,28 @@ document.addEventListener('turbolinks:load', () => {
   }
 
   if (window.location.pathname === "/" || window.location.pathname.includes("saisons/")) {
-    const activeSchedule = document.querySelector("#select-schedule > .active");
-    if (activeSchedule) {
-      activeSchedule.click();
-    } else {
-      // if last schedule is to far in past
-      const allSchedulesLinks = document.querySelectorAll("#select-schedule a");
-      const lastScheduleLink = allSchedulesLinks[allSchedulesLinks.length - 1];
-      lastScheduleLink.classList.add("active");
-      lastScheduleLink.click();
-    }
+    // const activeSchedule = document.querySelector("#select-schedule > .active");
+    // if (activeSchedule) {
+    //   activeSchedule.click();
+    // } else {
+    //   // if last schedule is to far in past
+    //   const allSchedulesLinks = document.querySelectorAll("#select-schedule a");
+    //   const lastScheduleLink = allSchedulesLinks[allSchedulesLinks.length - 1];
+    //   lastScheduleLink.classList.add("active");
+    //   lastScheduleLink.click();
+    // }
 
-    showSelectSchedule();
+    // showSelectSchedule();
+
+    const currentWeekLink =  document.querySelector("a#load-current-week");
+    console.log("Je passe là");
+    if (currentWeekLink) {
+      console.log(currentWeekLink);
+      console.log("J'ai trouvé le lien spécial show as_week");
+      currentWeekLink.click();
+    } else {
+      // TODO : gérer le début d'année car par défaut on va chercher dans le passé jusqu'à trouver une semaine avec des matches
+    }
   }
 
 });

@@ -9,8 +9,11 @@ if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
   // for not mobile
   <% device = 'desktop' %>
 }
+// document.querySelector("#active-schedule").innerHTML =
+//  "<%= escape_javascript(render partial: 'schedules/show', locals: { schedule: @schedule, device: device } ) %>";
 document.querySelector("#active-schedule").innerHTML =
-  "<%= escape_javascript(render partial: 'schedules/show', locals: { schedule: @schedule, device: device } ) %>";
+  "<%= escape_javascript(render partial: 'schedules/show_as_week_calendar', locals: { week_calendar: @week_calendar } ) %>";
+
 
 
 /* START - THIS IS FOR THE SELECT ACTIVE SCHEDULE */

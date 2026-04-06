@@ -9,6 +9,24 @@ class Game < ApplicationRecord
   # validates :stadium, uniqueness: { allow_blank: true, allow_nil: true }
   validates :schedule, presence: true
 
+  scope :in_week, ->(week_number, year) {
+    where(
+      "EXTRACT(week FROM COALESCE(games.alternative_date, schedules.day)) = ? " \
+      "AND EXTRACT(year FROM COALESCE(games.alternative_date, schedules.day)) = ?",
+      week_number, year
+    ).joins(:schedule)
+  }
+
+  # TODO : chat Mistral "select model by week..."
+  def self.in_week_grouped_by_edition_and_schedule(week_number, year)
+    in_week(week_number, year)
+      .includes(:schedule)
+      .group_by { |game| game.schedule.edition }
+      .transform_values do |games_in_edition|
+        games_in_edition.group_by { |game| game.schedule }
+      end
+  end
+
   def played?
     status == "played"
   end
