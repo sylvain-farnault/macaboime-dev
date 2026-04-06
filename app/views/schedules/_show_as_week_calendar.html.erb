@@ -1,0 +1,87 @@
+<div class="schedule-header">
+  <%= link_to calendar_per_week_schedules_path(year: (@displayed_date - 7.days).cwyear, week: (@displayed_date - 7.days).cweek, search_direction: :past ), remote: true, id: "search-direction-past" do %>
+    <%= fa_icon("chevron-circle-left", class: "change-schedule") %>
+  <% end %>
+  <div class="schedule-designation">
+    Semaine du <%= @displayed_date.strftime("%e %b %Y") %>
+    <div class="infomm">
+    </div>
+  </div>
+  <%= link_to calendar_per_week_schedules_path(year: (@displayed_date + 7.days).cwyear, week: (@displayed_date + 7.days).cweek, search_direction: :futur ), remote: true, id: "search-direction-futur" do %>
+    <%= fa_icon("chevron-circle-right", class: "change-schedule") %>
+  <% end %>
+</div>
+
+
+
+<% @week_calendar.each do |edition, schedules| %>
+  <% is_cup = edition.competition.kind == "cup" %>
+  <div class="bg-secondary bg-opacity-25 p-0 pb-1 mt-4 position-relative border border-dark border-1">
+    <span class="position-absolute top-0 end-0 bg-secondary text-white px-3 py-1 fs-6 fw-bold rounded-top border border-dark border-1" style="transform: translateY(-50%) translateX(1px);">
+      <%= edition.designation %>
+    </span>
+    
+    
+    <% schedules.each do |schedule, games| %>
+      <span class="bg-dark bg-opacity-75 text-white px-3 py-1 fs-6 fw-bold rounded-end " style="transform: translateY(-50%);">
+        <% if schedule.edition.competition.kind == "championship" %>
+            <%= "Journée " + schedule.designation %>
+          <% elsif schedule.edition.competition.kind == "cup" %>
+            <%= "Cup " + schedule.designation %>
+          <% else %>
+            <%= "Amical " + schedule.designation %>
+        <% end %>
+      </span>
+      
+      <div class="modern-matches">
+        <% games.sort_by(&:day).each do |game| %>
+          <div class="match-container" data-controller="games">
+            <!-- Div stade qui apparaitra -->
+            <div data-games-target="stadium" class="stadium-overlay">
+              <%= game.stadium&.name || '--' %>
+            </div>
+
+            <!-- Barre principale -->
+            <div data-games-target="mainContent" class="match-bar">
+              <div class="team team-left">
+                <span class="team-name-full" data-games-target="team" data-team-id="<%= game.results.first.team.id %>"><%= game.results.first.team.team_names.last.name %></span>
+                <span class="team-name-short"><%= game.results.first.team.team_names.last.name.first(5).upcase %></span>
+                <%= fa_icon("flag", class: "forfeit-flag", title: "Forfait") if game.results.first.forfeit %>
+              </div>
+
+              <div data-games-target="score" class="score-section">
+                <% if game.status == "delayed" %>
+                  <span class="status-text">Reporté</span>
+                <% elsif game.status == "canceled" %>
+                  <span class="status-text">Annulé</span>
+                <% elsif game.status == "played" %>
+                  <% draw = game.results.first.mark == game.results.last.mark %>
+                  <div class="score-display">
+                    <div class="score-number left">
+                      <% if draw && is_cup %><sub class="penalty">(<%= game.results.first.penalty_mark %>)</sub><% end %><%= game.results.first.mark %>
+                    </div>
+                    <div class="score-number right">
+                      <%= game.results.last.mark %><% if draw && is_cup %><sub class="penalty">(<%= game.results.last.penalty_mark %>)</sub><% end %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+
+              <div class="team team-right">
+                <%= fa_icon("flag", class: "forfeit-flag", title: "Forfait") if game.results.last.forfeit %>
+                <span class="team-name-full" data-games-target="team" data-team-id="<%= game.results.last.team.id %>"><%= game.results.last.team.team_names.last.name %></span>
+                <span class="team-name-short"><%= game.results.last.team.team_names.last.name.first(4).upcase %></span>
+              </div>
+
+              <button data-games-target="button" data-action="click->games#toggle" class="stadium-btn">
+                <%= fa_icon("angle-double-left") %>
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+
