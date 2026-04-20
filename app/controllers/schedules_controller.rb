@@ -1,5 +1,5 @@
 class SchedulesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:show]
+  skip_before_action :authenticate_user!, only: [:show, :calendar_per_week]
   respond_to :html, :js
 
   def index
