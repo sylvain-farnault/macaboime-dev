@@ -34,7 +34,7 @@
       <% end %>
     </div>
     <%= link_to "Semaine à afficher",
-      calendar_per_week_schedules_path(year: (date_now + 4.days).cwyear, week: (date_now + 4.days).cweek, search_direction: :past), 
+      calendar_per_week_schedules_path(year: (date_now + 4.days).cwyear, week: (date_now + 4.days).cweek, search_direction: :futur), 
       remote: true, 
       class: "d-none",
       id: "load-current-week"
