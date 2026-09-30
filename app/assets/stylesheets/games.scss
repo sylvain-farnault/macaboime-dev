@@ -66,10 +66,11 @@
 // Conteneur des matches
 .modern-matches {
   padding: 0 1rem;
+  margin-bottom: 0.75rem;
   
   .match-container {
     position: relative;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.25rem;
     height: var(--height-match-container);
   }
 
